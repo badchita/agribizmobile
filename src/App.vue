@@ -24,6 +24,8 @@
     gridSharp,
     notificationsSharp,
     personSharp,
+    cartOutline,
+    chatbubbleEllipsesOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -35,6 +37,8 @@
     'grid-sharp': gridSharp,
     'notifications-sharp': notificationsSharp,
     'person-sharp': personSharp,
+    'cart-outline': cartOutline,
+    'chatbubble-ellipses-outline': chatbubbleEllipsesOutline,
   });
 
   export default ({
