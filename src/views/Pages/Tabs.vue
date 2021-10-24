@@ -91,3 +91,7 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  @import '@/assets/css/tabs.scss';
+</style>

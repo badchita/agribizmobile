@@ -21,3 +21,7 @@
     components: {}
   }
 </script>
+
+<style lang="scss">
+  @import '@/assets/css/global-variables.scss';
+</style>
