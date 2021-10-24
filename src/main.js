@@ -86,6 +86,11 @@ import {
   IonThumbnail,
 } from '@ionic/vue';
 
+import {
+  Swiper,
+  SwiperSlide
+} from 'swiper/vue';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -108,6 +113,9 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
+
+app.component('swiper', Swiper)
+app.component('swiper-slide', SwiperSlide)
 
 app.component('ion-badge', IonBadge)
 app.component('ion-button', IonButton)

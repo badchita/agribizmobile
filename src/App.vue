@@ -26,6 +26,8 @@
     personSharp,
     cartOutline,
     chatbubbleEllipsesOutline,
+    chevronForward,
+    chevronForwardCircleOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -39,6 +41,8 @@
     'person-sharp': personSharp,
     'cart-outline': cartOutline,
     'chatbubble-ellipses-outline': chatbubbleEllipsesOutline,
+    'chevron-forward': chevronForward,
+    'chevron-forward-circle-outline': chevronForwardCircleOutline,
   });
 
   export default ({
