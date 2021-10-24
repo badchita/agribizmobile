@@ -93,5 +93,6 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '@/assets/css/global-variables.scss';
   @import '@/assets/css/tabs.scss';
 </style>
