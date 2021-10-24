@@ -3,24 +3,6 @@ ion-searchbar {
     --box-shadow: none !important;
 }
 
-ion-button {
-    overflow: visible;
-
-    ion-icon {
-        color: $na-green;
-        margin-top: 10px;
-    }
-}
-
-ion-badge {
-    position: absolute;
-    bottom: 14px;
-    left: 6px;
-    font-size: 10px;
-    font-weight: lighter;
-    background: $na-green;
-}
-
 ion-grid {
     margin-top: 10px;
     background: white;

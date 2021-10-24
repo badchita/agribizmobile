@@ -1,16 +1,38 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Tab 1</ion-title>
+    <ion-header class="ion-no-border">
+      <ion-toolbar >
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon class="cart-chat-icon" style="color: white;" name="cart-outline" />
+            <ion-badge class="notification-badge" style="background: white; color: #58a89d;">
+              1
+            </ion-badge>
+          </ion-button>
+          <ion-button>
+            <ion-icon class="cart-chat-icon" style="color: white;" name="chatbubble-ellipses-outline" />
+            <ion-badge class="notification-badge" style="background: white; color: #58a89d;">
+              1
+            </ion-badge>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-toolbar no-border-top >
+        <ion-avatar slot="start">
+          <ion-icon name="person-sharp" />
+          <!-- <ion-img src="https://pickaface.net/gallery/avatar/unr_test_180821_0925_9k0pgs.png"/> -->
+        </ion-avatar>
+        <ion-buttons slot="end">
+          <ion-button class="login-button">
+            Log In
+          </ion-button>
+          <ion-button class="sign-up-button">
+            Sign Up
+          </ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Me</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-content>
     </ion-content>
   </ion-page>
 </template>
@@ -21,3 +43,9 @@
     components: {}
   }
 </script>
+
+<style lang="scss" scoped>
+  @import '@/assets/css/global-variables.scss';
+  @import '@/assets/css/global.scss';
+  @import '@/assets/css/me.scss';
+</style>

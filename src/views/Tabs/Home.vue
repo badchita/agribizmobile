@@ -5,14 +5,14 @@
         <ion-searchbar type="text" slot="start" />
         <ion-buttons slot="end">
           <ion-button>
-            <ion-icon name="cart-outline" />
-            <ion-badge>
+            <ion-icon class="cart-chat-icon" name="cart-outline" />
+            <ion-badge class="notification-badge">
               1
             </ion-badge>
           </ion-button>
           <ion-button>
-            <ion-icon name="chatbubble-ellipses-outline" />
-            <ion-badge>
+            <ion-icon class="cart-chat-icon" name="chatbubble-ellipses-outline" />
+            <ion-badge class="notification-badge">
               1
             </ion-badge>
           </ion-button>
@@ -164,7 +164,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '@/assets/css/global-variables.scss';
   @import '@/assets/css/global.scss';
   @import '@/assets/css/home.scss';
