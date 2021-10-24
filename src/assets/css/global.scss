@@ -1,3 +1,28 @@
 ion-content {
     --background: #F5F5F5;
 }
+
+.see-more-slide {
+    color: $na-green;
+
+    .see-more-label {
+        --color: #58a89d;
+        font-size: 20px;
+    }
+
+    ion-icon {
+        font-size: 45px;
+    }
+}
+
+.header-see-more-label {
+    font-size: 12px;
+
+    ion-icon {
+        margin-top: 2px;
+    }
+}
+
+.price {
+    color: $na-green !important;
+}

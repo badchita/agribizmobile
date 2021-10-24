@@ -26,7 +26,7 @@ ion-grid {
     background: white;
 }
 
-.top-product-card {
+.slide-product-card {
     box-shadow: none;
     border: 1px solid #F0F0F0;
     text-align: left;
@@ -43,18 +43,5 @@ ion-grid {
     ion-card-content {
         background: #F0F0F0;
         font-size: 14px;
-    }
-}
-
-.see-more-slide {
-    color: $na-green;
-
-    .see-more-label {
-        --color: #58a89d;
-        font-size: 20px;
-    }
-
-    ion-icon {
-        font-size: 45px;
     }
 }
