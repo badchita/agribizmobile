@@ -20,6 +20,10 @@
     gridOutline,
     notificationsOutline,
     personOutline,
+    homeSharp,
+    gridSharp,
+    notificationsSharp,
+    personSharp,
   } from 'ionicons/icons';
 
   addIcons({
@@ -27,6 +31,10 @@
     'grid-outline': gridOutline,
     'notifications-outline': notificationsOutline,
     'person-outline': personOutline,
+    'home-sharp': homeSharp,
+    'grid-sharp': gridSharp,
+    'notifications-sharp': notificationsSharp,
+    'person-sharp': personSharp,
   });
 
   export default ({
@@ -37,3 +45,9 @@
     }
   });
 </script>
+
+<style lang="scss">
+  * {
+    font-family: Helvetica, sans-serif;
+  }
+</style>
