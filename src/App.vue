@@ -28,6 +28,8 @@
     chatbubbleEllipsesOutline,
     chevronForward,
     chevronForwardCircleOutline,
+    chevronForwardOutline,
+    helpCircleOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -43,6 +45,8 @@
     'chatbubble-ellipses-outline': chatbubbleEllipsesOutline,
     'chevron-forward': chevronForward,
     'chevron-forward-circle-outline': chevronForwardCircleOutline,
+    'chevron-forward-outline': chevronForwardOutline,
+    'help-circle-outline': helpCircleOutline,
   });
 
   export default ({

@@ -4,12 +4,12 @@ ion-toolbar {
 
 .login-button {
     background: white;
-    color: $na-green;
+    --color: #58a89d;
 }
 
 .sign-up-button {
     border: 1px solid white;
-    color: white;
+    --color: white;
 }
 
 .sign-up-button,

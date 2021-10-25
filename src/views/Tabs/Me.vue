@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-header class="ion-no-border">
-      <ion-toolbar >
+      <ion-toolbar>
         <ion-buttons slot="end">
           <ion-button>
             <ion-icon class="cart-chat-icon" style="color: white;" name="cart-outline" />
@@ -17,7 +17,7 @@
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
-      <ion-toolbar no-border-top >
+      <ion-toolbar no-border-top>
         <ion-avatar slot="start">
           <ion-icon name="person-sharp" />
           <!-- <ion-img src="https://pickaface.net/gallery/avatar/unr_test_180821_0925_9k0pgs.png"/> -->
@@ -32,7 +32,20 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+
     <ion-content>
+      <ion-list>
+        <ion-item lines="none" button>
+          <ion-icon name="person-outline" slot="start" />
+          <ion-label>My Account Settings</ion-label>
+          <ion-icon name="chevron-forward-outline" slot="end" />
+        </ion-item>
+        <ion-item lines="none" button>
+          <ion-icon name="help-circle-outline" slot="start" />
+          <ion-label>Help</ion-label>
+          <ion-icon name="chevron-forward-outline" slot="end" />
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ion-page>
 </template>
