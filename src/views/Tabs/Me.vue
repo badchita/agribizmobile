@@ -23,7 +23,7 @@
           <!-- <ion-img src="https://pickaface.net/gallery/avatar/unr_test_180821_0925_9k0pgs.png"/> -->
         </ion-avatar>
         <ion-buttons slot="end">
-          <ion-button class="login-button">
+          <ion-button class="login-button" @click="onClickLogin">
             Log In
           </ion-button>
           <ion-button class="sign-up-button">
@@ -36,14 +36,14 @@
     <ion-content>
       <ion-list>
         <ion-item lines="none" button>
-          <ion-icon name="person-outline" slot="start" />
+          <ion-icon style="color: #483D8B;" name="person-outline" slot="start" />
           <ion-label>My Account Settings</ion-label>
-          <ion-icon name="chevron-forward-outline" slot="end" />
+          <ion-icon color="medium" name="chevron-forward-outline" slot="end" />
         </ion-item>
         <ion-item lines="none" button>
-          <ion-icon name="help-circle-outline" slot="start" />
+          <ion-icon color="success" name="help-circle-outline" slot="start" />
           <ion-label>Help</ion-label>
-          <ion-icon name="chevron-forward-outline" slot="end" />
+          <ion-icon color="medium" name="chevron-forward-outline" slot="end" />
         </ion-item>
       </ion-list>
     </ion-content>
@@ -51,9 +51,18 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
   export default {
     name: 'Me',
-    components: {}
+    components: {},
+    setup () {
+      const router = useRouter()
+
+      function onClickLogin() {
+        router.push(`/login`)
+      }
+      return {onClickLogin}
+    }
   }
 </script>
 

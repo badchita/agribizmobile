@@ -32,6 +32,10 @@ const routes = [{
         component: () => import('@/views/Tabs/Me')
       }
     ]
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/Pages/Login')
   }
 ]
 

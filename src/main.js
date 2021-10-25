@@ -110,10 +110,13 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import Header from '@/components/Header'
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
 
+app.component('Header', Header)
 app.component('swiper', Swiper)
 app.component('swiper-slide', SwiperSlide)
 
