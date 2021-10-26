@@ -30,6 +30,11 @@
     chevronForwardCircleOutline,
     chevronForwardOutline,
     helpCircleOutline,
+    lockClosedOutline,
+    eyeOff,
+    eye,
+    logoGoogle,
+    logoFacebook,
   } from 'ionicons/icons';
 
   addIcons({
@@ -47,6 +52,11 @@
     'chevron-forward-circle-outline': chevronForwardCircleOutline,
     'chevron-forward-outline': chevronForwardOutline,
     'help-circle-outline': helpCircleOutline,
+    'lock-closed-outline': lockClosedOutline,
+    'eye-off': eyeOff,
+    'eye': eye,
+    'logo-google': logoGoogle,
+    'logo-facebook': logoFacebook,
   });
 
   export default ({

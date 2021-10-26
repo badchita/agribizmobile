@@ -2,3 +2,39 @@
     width: 200px;
     margin: auto;
 }
+
+ion-list {
+    margin: auto;
+    width: 90%;
+
+    ion-item {
+        ion-icon {
+            font-size: 20px;
+        }
+    }
+
+    .login-active-button {
+        width: 100%;
+        margin-top: 16px;
+        --background: #58a89d;
+        --box-shadow: none;
+    }
+
+    ion-button {
+        text-transform: none;
+        --box-shadow: none;
+    }
+}
+
+a {
+    color: #58a89d;
+    text-decoration: none;
+}
+
+.or-item {
+    text-align: center;
+    padding-top: 6%;
+    width: 100%;
+    height: 100px;
+    color: var(--ion-color-medium);
+}

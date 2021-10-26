@@ -4,7 +4,7 @@
             <ion-back-button style="color: #58a89d;"></ion-back-button>
         </ion-buttons>
         <ion-title>
-            Login
+            {{title}}
         </ion-title>
     </ion-toolbar>
 </template>
