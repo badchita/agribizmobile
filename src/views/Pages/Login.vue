@@ -12,7 +12,7 @@
             <ion-list>
                 <ion-item>
                     <div class="ion-margin-end">
-                        <ion-icon color="medium" name="person-outline" />
+                        <ion-icon color="medium" name="mail-outline" />
                     </div>
                     <ion-input v-model="auth.email" placeholder="Email" @IonChange="onChangeEmailPassInput" />
                 </ion-item>
@@ -37,7 +37,7 @@
                 </ion-button>
                 <div class="ion-margin-top">
                     <ion-label>
-                        <router-link to="">Sign up</router-link>
+                        <router-link to="/sign-up">Sign up</router-link>
                     </ion-label>
                 </div>
                 <ion-item class="or-item" lines="none">

@@ -1,7 +1,7 @@
 <template>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button style="color: #58a89d;"></ion-back-button>
+            <ion-back-button style="color: #58a89d;" @click="onCLickGoBack"></ion-back-button>
         </ion-buttons>
         <ion-title>
             {{title}}
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
     export default {
         props: {
             title: {
@@ -18,9 +19,13 @@
             },
         },
         setup() {
-
-
-            return {}
+            const router = useRouter()
+            function onCLickGoBack() {
+                router.go(-1)
+            }
+            return {
+                onCLickGoBack
+            }
         }
     }
 </script>

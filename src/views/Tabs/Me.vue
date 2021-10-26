@@ -26,7 +26,7 @@
           <ion-button class="login-button" @click="onClickLogin">
             Log In
           </ion-button>
-          <ion-button class="sign-up-button">
+          <ion-button class="sign-up-button" @click="onClickSignUp">
             Sign Up
           </ion-button>
         </ion-buttons>
@@ -51,17 +51,26 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+  import {
+    useRouter
+  } from 'vue-router'
   export default {
     name: 'Me',
     components: {},
-    setup () {
+    setup() {
       const router = useRouter()
 
       function onClickLogin() {
         router.push(`/login`)
       }
-      return {onClickLogin}
+
+      function onClickSignUp() {
+        router.push(`/sign-up`)
+      }
+      return {
+        onClickLogin,
+        onClickSignUp
+      }
     }
   }
 </script>

@@ -35,6 +35,9 @@
     eye,
     logoGoogle,
     logoFacebook,
+    mailOutline,
+    phonePortraitOutline,
+    calendarOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -57,6 +60,9 @@
     'eye': eye,
     'logo-google': logoGoogle,
     'logo-facebook': logoFacebook,
+    'mail-outline': mailOutline,
+    'phone-portrait-outline': phonePortraitOutline,
+    'calendar-outline': calendarOutline,
   });
 
   export default ({

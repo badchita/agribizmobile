@@ -36,6 +36,10 @@ const routes = [{
   {
     path: '/login',
     component: () => import('@/views/Pages/Login')
+  },
+  {
+    path: '/sign-up',
+    component: () => import('@/views/Pages/SignUp')
   }
 ]
 
