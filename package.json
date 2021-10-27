@@ -17,6 +17,7 @@
     "@capacitor/status-bar": "1.0.5",
     "@ionic/vue": "^5.4.0",
     "@ionic/vue-router": "^5.4.0",
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "sass": "^1.43.3",
     "sass-loader": "^10.1.1",
