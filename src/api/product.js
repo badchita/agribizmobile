@@ -10,14 +10,8 @@ export default {
     update(product) {
         return api.put('product', product)
     },
-    list(user_id, status) {
-        if (status === 'O') {
-            return api.get(`products/${user_id}/` + status)
-        } else if (status === 'V') {
-            return api.get(`products/${user_id}/` + status)
-        } else {
-            return api.get(`products/` + user_id)
-        }
+    list() {
+        return api.get(`products`)
     },
     archive(product) {
         return api.patch('product', product)

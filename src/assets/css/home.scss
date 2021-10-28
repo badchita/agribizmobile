@@ -13,7 +13,7 @@ ion-grid {
     border: 1px solid #F0F0F0;
     text-align: left;
 
-    ion-card-header {
+    s ion-card-header {
         background: #F0F0F0;
 
         ion-card-title {
@@ -26,4 +26,8 @@ ion-grid {
         background: #F0F0F0;
         font-size: 14px;
     }
+}
+
+.daily-discover-col {
+    column-count: 2;
 }

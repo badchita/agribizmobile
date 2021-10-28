@@ -107,12 +107,26 @@
             <ion-icon color="medium" name='chevron-forward' />
           </ion-col>
         </ion-row>
-        <ion-row v-for="(item,i) in 5" :key="i">
-          <ion-col>
+        <ion-row>
+          <ion-col class="daily-discover-col">
+            <ion-card v-for="item in product" :key="item" class="slide-product-card" button>
+              <img src="@/assets/images/demo-top-product.jpg" />
+              <ion-card-header>
+                <ion-card-title>{{item.name}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-label>
+                  <p class="price">₱{{item.price}}</p>
+                  <p>31 sold</p>
+                </ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <!-- <ion-col>
             <ion-card class="slide-product-card" button>
               <img src="@/assets/images/demo-top-product.jpg" />
               <ion-card-header>
-                <ion-card-title>Apples</ion-card-title>
+                <ion-card-title>{{i}}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-label>
@@ -121,21 +135,7 @@
                 </ion-label>
               </ion-card-content>
             </ion-card>
-          </ion-col>
-          <ion-col>
-            <ion-card class="slide-product-card" button>
-              <img src="@/assets/images/demo-top-product.jpg" />
-              <ion-card-header>
-                <ion-card-title>Apples</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <ion-label>
-                  <p class="price">₱2000</p>
-                  <p>31 sold</p>
-                </ion-label>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
+          </ion-col> -->
         </ion-row>
       </ion-grid>
     </ion-content>
@@ -143,10 +143,22 @@
 </template>
 
 <script>
+  import ProductAPI from '@/api/product'
+  import {
+    ref
+  } from '@vue/reactivity';
+  import {
+    onMounted
+  } from '@vue/runtime-core';
   export default {
     name: 'Home',
     components: {},
     setup() {
+      onMounted(() => {
+        loadProduct()
+      })
+      let product = ref({})
+
       const slideOptsTopProd = {
         initialSlide: 1,
         slidesPerView: 3,
@@ -156,9 +168,18 @@
         initialSlide: 1,
         slidesPerView: 2,
       };
+
+      async function loadProduct() {
+        await ProductAPI.list().then((response) => {
+          product.value = response.data
+        }).catch((err) => {
+          console.error(err);
+        })
+      }
       return {
         slideOptsTopProd,
-        slideOptsFeatProd
+        slideOptsFeatProd,
+        product
       }
     }
   }
