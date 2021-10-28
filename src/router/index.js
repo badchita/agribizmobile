@@ -40,6 +40,10 @@ const routes = [{
   {
     path: '/sign-up',
     component: () => import('@/views/Pages/SignUp')
+  },
+  {
+    path: '/product-detail/:id',
+    component: () => import('@/views/Pages/ProductDetail')
   }
 ]
 

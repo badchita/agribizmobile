@@ -38,6 +38,10 @@
     mailOutline,
     phonePortraitOutline,
     calendarOutline,
+    heartOutline,
+    bus,
+    airplane,
+    airplaneOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -63,6 +67,10 @@
     'mail-outline': mailOutline,
     'phone-portrait-outline': phonePortraitOutline,
     'calendar-outline': calendarOutline,
+    'heart-outline': heartOutline,
+    'bus': bus,
+    'airplane': airplane,
+    'airplane-outline': airplaneOutline,
   });
 
   export default ({

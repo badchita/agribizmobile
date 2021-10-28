@@ -109,7 +109,7 @@
         </ion-row>
         <ion-row>
           <ion-col class="daily-discover-col">
-            <ion-card v-for="item in product" :key="item" class="slide-product-card" button>
+            <ion-card v-for="item in product" :key="item" class="slide-product-card" button @click="onClickProductCard(item.id)">
               <img src="@/assets/images/demo-top-product.jpg" />
               <ion-card-header>
                 <ion-card-title>{{item.name}}</ion-card-title>
@@ -122,20 +122,6 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
-          <!-- <ion-col>
-            <ion-card class="slide-product-card" button>
-              <img src="@/assets/images/demo-top-product.jpg" />
-              <ion-card-header>
-                <ion-card-title>{{i}}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <ion-label>
-                  <p class="price">₱2000</p>
-                  <p>31 sold</p>
-                </ion-label>
-              </ion-card-content>
-            </ion-card>
-          </ion-col> -->
         </ion-row>
       </ion-grid>
     </ion-content>
@@ -150,6 +136,7 @@
   import {
     onMounted
   } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
   export default {
     name: 'Home',
     components: {},
@@ -157,6 +144,7 @@
       onMounted(() => {
         loadProduct()
       })
+      const router = useRouter()
       let product = ref({})
 
       const slideOptsTopProd = {
@@ -169,6 +157,10 @@
         slidesPerView: 2,
       };
 
+      function onClickProductCard(id) {
+        router.push(`/product-detail/${id}`)
+      }
+
       async function loadProduct() {
         await ProductAPI.list().then((response) => {
           product.value = response.data
@@ -179,7 +171,8 @@
       return {
         slideOptsTopProd,
         slideOptsFeatProd,
-        product
+        product,
+        onClickProductCard
       }
     }
   }

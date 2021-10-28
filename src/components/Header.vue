@@ -1,16 +1,20 @@
 <template>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button style="color: #58a89d;" @click="onCLickGoBack"></ion-back-button>
+            <ion-back-button style="color: #58a89d;" @click="onClickGoBack"></ion-back-button>
         </ion-buttons>
-        <ion-title>
+        <ion-title class="ion-margin-end header-title">
             {{title}}
         </ion-title>
+        <ion-buttons class="ion-margin-start" slot="end">
+        </ion-buttons>
     </ion-toolbar>
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+    import {
+        useRouter
+    } from 'vue-router'
     export default {
         props: {
             title: {
@@ -20,16 +24,19 @@ import { useRouter } from 'vue-router'
         },
         setup() {
             const router = useRouter()
-            function onCLickGoBack() {
+
+            function onClickGoBack() {
                 router.go(-1)
             }
             return {
-                onCLickGoBack
+                onClickGoBack
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    @import '@/assets/css/global-variables.scss';
+    @import '@/assets/css/global.scss';
     @import '@/assets/css/header.scss';
 </style>

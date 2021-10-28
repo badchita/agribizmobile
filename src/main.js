@@ -112,15 +112,17 @@ import '@ionic/vue/css/display.css';
 import './theme/variables.css';
 
 import Header from '@/components/Header'
-
+import StarRating from 'vue-star-rating'
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(store)
 
 app.component('Header', Header)
+app.component('StarRating', StarRating)
 app.component('swiper', Swiper)
 app.component('swiper-slide', SwiperSlide)
+
 
 app.component('ion-badge', IonBadge)
 app.component('ion-button', IonButton)

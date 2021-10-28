@@ -40,3 +40,12 @@ ion-content {
 .price {
     color: $na-green !important;
 }
+
+.header-title {
+    text-align: center;
+}
+
+ion-searchbar {
+    --background: #F0F0F0 !important;
+    --box-shadow: none !important;
+}
