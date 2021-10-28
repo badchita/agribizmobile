@@ -22,14 +22,14 @@
             </ion-slides>
             <ion-item-group>
                 <ion-item lines="none">
-                    <ion-badge>Available</ion-badge>
+                    <ion-badge>{{products.product_status}}</ion-badge>
                     <ion-label class="ion-margin-start" style="font-size: 18px;">
-                        Name
+                        {{products.name}}
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
                     <ion-label style="color: #58a89d;">
-                        Price
+                        ₱{{products.price}}
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
@@ -44,8 +44,8 @@
                             </ion-label>
                         </ion-col>
                         <ion-col size="10">
-                            <ion-label>
-                                <ion-icon class="ion-margin-end" name="airplane-outline" /> Shipping from
+                            <ion-label class="ion-text-wrap">
+                                <ion-icon class="ion-margin-end" name="airplane-outline" /> Shipping from {{products.product_location}}
                             </ion-label>
                         </ion-col>
                         <ion-col size="10">
@@ -116,48 +116,68 @@
                 <ion-item lines="none">
                     <ion-label color="medium">Stock</ion-label>
                     <ion-label class="ion-margin-end">
-                        <ion-badge>Available</ion-badge>
+                        <ion-badge>{{products.product_status}}</ion-badge>
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
                     <ion-label color="medium">Ships From</ion-label>
-                    <ion-label class="ion-margin-end">Ships From</ion-label>
+                    <ion-label class="ion-margin-end ion-text-wrap">{{products.product_location}}</ion-label>
                 </ion-item>
                 <ion-item lines="none">
-                    <div>Product Detail</div>
+                    <div v-html="products.description" />
                 </ion-item>
             </ion-list>
         </ion-content>
 
         <ion-footer class="ion-no-border">
-                <ion-buttons>
-                    <ion-button expand="full" full class="chat-add-to-cart-buttons">
-                        Chat
-                    </ion-button>
-                    <ion-button expand="full" class="chat-add-to-cart-buttons">
-                        Add to Cart
-                    </ion-button>
-                    <ion-button expand="full" style="--background: var(--ion-color-primary)">
-                        Buy Now
-                    </ion-button>
-                </ion-buttons>
+            <ion-buttons>
+                <ion-button expand="full" full class="chat-add-to-cart-buttons">
+                    Chat
+                </ion-button>
+                <ion-button expand="full" class="chat-add-to-cart-buttons">
+                    Add to Cart
+                </ion-button>
+                <ion-button expand="full" style="--background: var(--ion-color-primary)">
+                    Buy Now
+                </ion-button>
+            </ion-buttons>
         </ion-footer>
     </ion-page>
 </template>
 
 <script>
+    import ProductAPI from '@/api/product'
     import {
         useRouter
     } from 'vue-router'
+    import {
+        onMounted,
+        ref
+    } from '@vue/runtime-core'
     export default {
         setup() {
+            onMounted(() => {
+                loadProductDetail()
+            })
             const router = useRouter()
+
+            let products = ref({})
 
             function onClickGoBack() {
                 router.go(-1)
             }
+
+            function loadProductDetail() {
+                const id = router.currentRoute.value.params.id
+                ProductAPI.get(id).then((response) => {
+                    products.value = response.data.data
+                }).catch((err) => {
+                    console.error(err);
+                })
+            }
             return {
-                onClickGoBack
+                onClickGoBack,
+                products
             }
         }
     }
