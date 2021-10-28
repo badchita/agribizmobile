@@ -19,7 +19,7 @@ export default {
       if (process.browser) {
         state.userId = Number(localStorage.getItem('userId'))
       }
-      return state.userId !== 0 && !isNaN(state.userId)
+      // return state.userId !== 0 && !isNaN(state.userId)
     },
     userId(state) {
       return state.userId
@@ -34,6 +34,7 @@ export default {
   mutations: {
     ...make.mutations(state),
     AUTHENTICATING_SUCCESS(state, payload) {
+      console.log(payload);
       AuthAPI.setToken(payload.token)
       state.userId = payload.user_id
       localStorage.setItem('token', payload.token)

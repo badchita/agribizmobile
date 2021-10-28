@@ -20,12 +20,36 @@ ion-toolbar {
     margin-left: 8px;
 }
 
+.user-detail-row {
+    color: white;
+
+    ion-col {
+        padding: 0;
+
+        ion-chip {
+            height: 18px;
+            font-size: 12px;
+            --background: white;
+            --color: #58a89d;
+        }
+
+        .user-name-label {
+            font-size: 20px;
+        }
+
+        ion-label {
+            font-size: 12px;
+        }
+    }
+}
+
 ion-avatar {
     text-align: center;
     background: white;
     width: 50px;
     height: 50px;
-    margin-left: 10px;
+    margin-left: 16px;
+    margin-right: 16px;
 
     ion-icon {
         margin-top: 10px;
