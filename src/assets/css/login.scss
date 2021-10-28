@@ -24,6 +24,18 @@ ion-list {
         text-transform: none;
         --box-shadow: none;
     }
+
+    .error-message-item {
+        margin: auto;
+        margin-top: 30px;
+        width: 93%;
+        --background: rgba(var(--ion-color-danger-rgb), .5);
+        --color: rgb(0, 0, 0, .8);
+
+        ion-button {
+            --color: rgb(0, 0, 0, .6);
+        }
+    }
 }
 
 a {

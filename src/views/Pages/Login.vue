@@ -20,7 +20,8 @@
                     <div style="margin-right: 8px;">
                         <ion-icon color="medium" name="lock-closed-outline" />
                     </div>
-                    <ion-input v-model="auth.password" placeholder="Password" :type="passwordVisibility" @IonChange="onChangeEmailPassInput" />
+                    <ion-input v-model="auth.password" placeholder="Password" :type="passwordVisibility"
+                        @IonChange="onChangeEmailPassInput" />
                     <ion-buttons>
                         <ion-button v-if="passwordVisibility === 'password'" @click="onClickIconEyeOff">
                             <ion-icon color="medium" name="eye-off" />
@@ -33,7 +34,14 @@
                         <router-link to="">Forgot?</router-link>
                     </ion-label>
                 </ion-item>
-                <ion-button class="login-active-button" expand="full" :disabled="loginButtonDisabled">Log In
+                <ion-item v-if="showError" class="error-message-item" lines="none">
+                    <ion-button fill="clear" slot="end" @click="onClickCloseErrorIcon">
+                        <ion-icon name="close-circle" />
+                    </ion-button>
+                    <span>{{errorMessage}}</span>
+                </ion-item>
+                <ion-button class="login-active-button" expand="full" :disabled="loginButtonDisabled"
+                    @click="onClickLogin">Log In
                 </ion-button>
                 <div class="ion-margin-top">
                     <ion-label>
@@ -51,18 +59,26 @@
                     <ion-icon class="ion-margin-start" name="logo-facebook" slot="start" />Continue with Facebook
                 </ion-button>
             </ion-list>
+            <ion-loading :is-open="isLoading" message="Logging In..."></ion-loading>
         </ion-content>
     </ion-page>
 </template>
 
 <script>
     import {
+        computed,
         reactive,
         ref
     } from '@vue/reactivity'
     import {
         onMounted
     } from '@vue/runtime-core'
+    import {
+        useStore
+    } from 'vuex'
+    import {
+        useRouter
+    } from 'vue-router'
 
     export default {
         setup() {
@@ -75,8 +91,14 @@
                 password_confirmation: '',
             })
 
+            const router = useRouter()
+            const store = useStore()
+
             let passwordVisibility = ref('password')
             let loginButtonDisabled = ref(true)
+            let showError = ref(false)
+
+            let isLoading = computed(() => store.state.loading.status);
 
             function onClickIconEyeOff() {
                 passwordVisibility.value = 'text'
@@ -93,13 +115,41 @@
                     loginButtonDisabled.value = false
                 }
             }
+
+            function onClickCloseErrorIcon() {
+                showError.value = false
+            }
+
+            async function onClickLogin() {
+                auth.password_confirmation = auth.password
+                store.dispatch('loading/start')
+                store.dispatch('auth/login', auth).then(() => {
+                        setTimeout(() => {
+                            store.dispatch('toast/presentToast', {
+                                m: 'Successfully Loged In',
+                                type: ''
+                            })
+                        }, 1000)
+                        router.push('/tabs/me')
+                    }).catch((err) => {
+                        console.error(err);
+                        showError.value = true
+                    })
+                    .finally(() => {
+                        store.dispatch('loading/finish')
+                    })
+            }
             return {
                 onClickIconEyeOff,
                 onClickIconEye,
                 passwordVisibility,
                 auth,
                 onChangeEmailPassInput,
-                loginButtonDisabled
+                loginButtonDisabled,
+                onClickLogin,
+                onClickCloseErrorIcon,
+                showError,
+                isLoading
             }
         }
     }

@@ -22,7 +22,19 @@
           <ion-icon name="person-sharp" />
           <!-- <ion-img src="https://pickaface.net/gallery/avatar/unr_test_180821_0925_9k0pgs.png"/> -->
         </ion-avatar>
-        <ion-buttons slot="end">
+        <ion-row>
+          <ion-col>
+            <ion-label>UserName</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-chip>Customer</ion-chip>
+          </ion-col>
+          <ion-col>
+            <ion-label>Following</ion-label>
+            <ion-label>UserName</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-buttons v-if="!isUserLoggedIn" slot="end">
           <ion-button class="login-button" @click="onClickLogin">
             Log In
           </ion-button>
@@ -52,13 +64,23 @@
 
 <script>
   import {
+    computed
+  } from '@vue/reactivity'
+  import {
     useRouter
   } from 'vue-router'
+  import {
+    useStore
+  } from 'vuex'
   export default {
     name: 'Me',
     components: {},
     setup() {
       const router = useRouter()
+      const store = useStore()
+
+      const isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
+      console.log(isUserLoggedIn.value);
 
       function onClickLogin() {
         router.push(`/login`)
@@ -69,7 +91,8 @@
       }
       return {
         onClickLogin,
-        onClickSignUp
+        onClickSignUp,
+        isUserLoggedIn
       }
     }
   }

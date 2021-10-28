@@ -95,6 +95,7 @@
                     <ion-icon class="ion-margin-start" name="logo-facebook" slot="start" />Continue with Facebook
                 </ion-button>
             </ion-list>
+            <ion-loading :is-open="isLoading" message="Creating Account..."></ion-loading>
         </ion-content>
     </ion-page>
 </template>
@@ -105,9 +106,6 @@
         reactive,
         ref
     } from '@vue/reactivity'
-    import {
-        loadingController
-    } from '@ionic/core'
     import {
         useStore
     } from 'vuex';
@@ -164,7 +162,7 @@
 
             function onClickSignUp() {
                 register.mobile = +register.mobile
-                presentLoading()
+                store.dispatch('loading/start')
                 store.dispatch('auth/register', register).then(() => {
                     setTimeout(() => {
                         store.dispatch('toast/presentToast', {
@@ -182,22 +180,6 @@
                 })
             }
 
-            async function presentLoading() {
-                store.dispatch('loading/start')
-                return await loadingController.create({
-                        message: 'Creating Account...'
-                    })
-                    .then(loading => {
-                        loading.present()
-                            .then(() => {
-                                setTimeout(() => {
-                                    if (!isLoading.value)
-                                        loading.dismiss()
-                                }, 500)
-                            })
-                    })
-            }
-
             return {
                 onClickIconEyeOff,
                 onClickIconEye,
@@ -210,7 +192,8 @@
                 onChangeGetBithday,
                 onClickCloseErrorIcon,
                 showError,
-                errorMessage
+                errorMessage,
+                isLoading
             }
         }
     }
