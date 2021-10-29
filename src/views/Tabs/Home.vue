@@ -116,7 +116,7 @@
               </ion-card-header>
               <ion-card-content>
                 <ion-label>
-                  <p class="price">₱{{item.price}}</p>
+                  <p class="price">₱{{numberWithCommaFormatt(item.price)}}</p>
                   <p>31 sold</p>
                 </ion-label>
               </ion-card-content>
@@ -160,6 +160,11 @@ import { useRouter } from 'vue-router';
       function onClickProductCard(id) {
         router.push(`/product-detail/${id}`)
       }
+      function numberWithCommaFormatt(number) {
+                var n = parseFloat(number).toFixed(2)
+                var withComma = Number(n).toLocaleString('en')
+                return withComma
+            }
 
       async function loadProduct() {
         await ProductAPI.list().then((response) => {
@@ -172,7 +177,8 @@ import { useRouter } from 'vue-router';
         slideOptsTopProd,
         slideOptsFeatProd,
         product,
-        onClickProductCard
+        onClickProductCard,
+        numberWithCommaFormatt
       }
     }
   }

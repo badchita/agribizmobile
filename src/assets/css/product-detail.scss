@@ -37,6 +37,17 @@
     }
 }
 
+.product-description {
+    border-top: 1px solid var(--ion-color-medium);
+    // border-bottom: 1px solid var(--ion-color-medium);
+    width: 100%;
+}
+
+.show-label {
+    border-top: 1px solid var(--ion-color-medium);
+    padding-top: 16px;
+}
+
 ion-list {
     ion-label {
         font-size: 14px;

@@ -42,6 +42,11 @@
     bus,
     airplane,
     airplaneOutline,
+    chevronDownOutline,
+    chevronUpOutline,
+    locationOutline,
+    storefrontOutline,
+    cashOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -71,6 +76,11 @@
     'bus': bus,
     'airplane': airplane,
     'airplane-outline': airplaneOutline,
+    'chevron-down-outline': chevronDownOutline,
+    'chevron-up-outline': chevronUpOutline,
+    'location-outline': locationOutline,
+    'storefront-outline': storefrontOutline,
+    'cash-outline': cashOutline,
   });
 
   export default ({

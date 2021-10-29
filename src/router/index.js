@@ -44,6 +44,10 @@ const routes = [{
   {
     path: '/product-detail/:id',
     component: () => import('@/views/Pages/ProductDetail')
+  },
+  {
+    path: '/checkout/:quantity/:id',
+    component: () => import('@/views/Pages/Checkout')
   }
 ]
 

@@ -25,7 +25,7 @@ export default {
         }) {
             const toast = await toastController.create({
                 message: m,
-                color: type === 'message' ? 'danger' : 'success',
+                color: type === 'error' ? 'danger' : 'success',
                 position: 'top',
                 duration: 3500,
                 cssClass: 'toast-style',
