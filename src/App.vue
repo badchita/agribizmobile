@@ -47,6 +47,9 @@
     locationOutline,
     storefrontOutline,
     cashOutline,
+    heart,
+    add,
+    checkmark,
   } from 'ionicons/icons';
 
   addIcons({
@@ -81,6 +84,9 @@
     'location-outline': locationOutline,
     'storefront-outline': storefrontOutline,
     'cash-outline': cashOutline,
+    'heart': heart,
+    'add': add,
+    'checkmark': checkmark,
   });
 
   export default ({

@@ -34,8 +34,15 @@
                 </ion-item>
                 <ion-item lines="none">
                     <StarRating :rating="4.6" :show-rating="true" :read-only="true" :increment="0.01" :star-size="18" />
-                    <ion-label class="ion-margin-start" color="medium" style="font-size: 14px;">Stocks: {{products.quantity}}</ion-label>
-                    <ion-icon slot="end" name="heart-outline" />
+                    <ion-label class="ion-margin-start" color="medium" style="font-size: 14px;">Stocks:
+                        {{products.quantity}}</ion-label>
+                    <ion-button v-if="!likeButtonStatus" fill="clear" color="medium" @click="onClickLike()">
+                        <ion-icon slot="icon-only" name="heart-outline" />
+                    </ion-button>
+                    <ion-button v-if="likeButtonStatus" fill="clear" color="medium" @click="onClickLike()">
+                        <ion-icon slot="icon-only" color="danger" name="heart" />
+                    </ion-button>
+                    <p>{{like_products.length}}</p>
                 </ion-item>
                 <ion-item class="ion-margin-top" lines="none">
                     <ion-row class="shipping-row">
@@ -76,7 +83,7 @@
                     </ion-col>
                     <ion-col size="6">
                         <div class="ion-margin-top">
-                            <ion-label>{{seller.name}}</ion-label>
+                            <ion-label>{{seller.username}}</ion-label>
                         </div>
                     </ion-col>
                     <ion-col size="3.5">
@@ -142,7 +149,7 @@
             </ion-list>
         </ion-content>
 
-        <ion-footer class="ion-no-borde">
+        <ion-footer class="ion-no-border">
             <ion-buttons>
                 <ion-button expand="full" full class="chat-add-to-cart-buttons">
                     Chat
@@ -150,10 +157,12 @@
                 <ion-button expand="full" class="chat-add-to-cart-buttons">
                     Add to Cart
                 </ion-button>
-                <ion-button v-if="products.product_status === 'Available'" expand="full" style="--background: var(--ion-color-primary)" @click="onClickBuy">
+                <ion-button v-if="products.product_status === 'Available'" expand="full"
+                    style="--background: var(--ion-color-primary)" @click="onClickBuy">
                     <ion-label>Buy Now</ion-label>
                 </ion-button>
-                <ion-button v-else expand="full" style="--background: var(--ion-color-danger); --ripple-color: transparent;">
+                <ion-button v-else expand="full"
+                    style="--background: var(--ion-color-danger); --ripple-color: transparent;">
                     <ion-label>Out of Stocks</ion-label>
                 </ion-button>
             </ion-buttons>
@@ -163,6 +172,8 @@
 
 <script>
     import ProductAPI from '@/api/product'
+    import LikeProductsAPI from '@/api/like_products'
+
     import {
         useRouter
     } from 'vue-router'
@@ -181,6 +192,7 @@
         setup() {
             onMounted(() => {
                 loadProductDetail()
+                loadLikeProducts()
             })
             const router = useRouter()
             const store = useStore()
@@ -190,8 +202,11 @@
             let seeMore = ref(false)
             let quantity = ref(0)
             let addresses_detail = ref({})
+            let like_products = ref([])
+            let likeButtonStatus = ref(false)
 
             let isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
+            let userId = computed(() => store.state.user.userData.id)
 
             function onClickGoBack() {
                 router.go(-1)
@@ -228,6 +243,63 @@
                 })
             }
 
+            function loadLikeProducts() {
+                const productId = router.currentRoute.value.params.id
+
+                LikeProductsAPI.list(userId.value, +productId).then((response) => {
+                    like_products.value = response.data
+                    like_products.value.forEach((value) => {
+                        if (value.user_id === userId.value && value.product_id === +productId && value
+                            .status === 'V') {
+                            likeButtonStatus.value = false
+                        } else if (value.user_id === userId.value && value.product_id === +productId &&
+                            value.status === 'O') {
+                            likeButtonStatus.value = true
+                        }
+                    })
+                })
+            }
+
+            function onClickLike() {
+                const productId = router.currentRoute.value.params.id
+
+                // const payload = {
+                //     product_id: productId,
+                //     user_id: userId.value,
+                //     status: 'O'
+                // }
+
+                like_products.value.forEach((value) => {
+                    if (value.product_id === +productId && value.user_id === userId.value && value.status ===
+                        'O') {
+                        value.status = 'V'
+                        LikeProductsAPI.archive(value).then(() => {
+                            loadLikeProducts()
+                        })
+                    } else if (value.product_id === +productId && value.user_id === userId.value && value
+                        .status === 'V') {
+                        value.status = 'O'
+                        LikeProductsAPI.archive(value).then(() => {
+                            loadLikeProducts()
+                        })
+                    }
+                    // else {
+                    //     LikeProductsAPI.add(payload).then(() => {
+                    //         loadLikeProducts()
+                    //     })
+                    // }
+                })
+                // const payload = {
+                //     product_id: productId,
+                //     user_id: userId.value,
+                //     status: 'O'
+                // }
+                // console.log(payload);
+                // LikeProductsAPI.add(payload).then(() => {
+                //     loadLikeProducts()
+                // })
+            }
+
             function numberWithCommaFormatt(number) {
                 var n = parseFloat(number).toFixed(2)
                 var withComma = Number(n).toLocaleString('en')
@@ -261,7 +333,11 @@
                 quantity,
                 addresses_detail,
                 numberWithCommaFormatt,
-                isUserLoggedIn
+                isUserLoggedIn,
+                onClickLike,
+                like_products,
+                userId,
+                likeButtonStatus
             }
         }
     }

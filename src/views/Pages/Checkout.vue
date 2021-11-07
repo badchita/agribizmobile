@@ -7,11 +7,12 @@
         <ion-content>
             <!-- deliver address -->
             <ion-item-group class="ion-margin-top">
-                <ion-item style="height: 28px" lines="none">
+                <ion-item style="height: 28px;" lines="none">
                     <ion-icon name="location-outline" />
                     <ion-label class="delivery-address-header-label">
                         Delivery Adddress
                     </ion-label>
+                    <ion-icon color="medium" name="chevron-forward" @click="onClickToAddressSelection" />
                 </ion-item>
                 <ion-item class="delivery-item" lines="none">
                     <ion-label>Name | Mobile</ion-label>
@@ -32,7 +33,7 @@
                 <ion-row>
                     <ion-col>
                         <ion-icon name="storefront-outline" class="ion-margin-end" />
-                        <ion-label><strong>{{seller.name}}</strong></ion-label>
+                        <ion-label><strong>{{seller.username}}</strong></ion-label>
                     </ion-col>
                 </ion-row>
                 <ion-row class="product-detail-row">
@@ -84,7 +85,7 @@
                 </ion-row>
             </ion-grid>
 
-            <!-- patment -->
+            <!-- payment -->
             <ion-grid class="ion-margin-top payment-grid">
                 <ion-row>
                     <ion-col size="7.6">
@@ -125,7 +126,7 @@
                     <ion-label>Total Payment:</ion-label>
                     <ion-label><strong>₱{{numberWithCommaFormatt(totalPayment)}}</strong></ion-label>
                 </ion-item>
-                <ion-button slot="end">Place Order</ion-button>
+                <ion-button slot="end" @click="onClickPlaceOrder">Place Order</ion-button>
             </ion-toolbar>
         </ion-footer>
     </ion-page>
@@ -141,6 +142,7 @@
     import {
         useRouter
     } from 'vue-router'
+import { useStore } from 'vuex'
     export default {
         setup() {
             onMounted(() => {
@@ -148,10 +150,13 @@
             })
 
             const router = useRouter()
+            const store = useStore()
 
             let products_detail = ref({})
             let addresses_detail = ref({})
             let seller = ref({})
+
+            let userId = computed(() => store.state.user.userData.id)
 
             let totalPayment = computed(() => {
                 return itemSubtotal.value + addresses_detail.value.shipping_fee
@@ -180,6 +185,19 @@
                 var withComma = Number(n).toLocaleString('en')
                 return withComma
             }
+
+            function onClickPlaceOrder() {
+                let payload = {
+                    user_id: userId.value,
+                    product_id: products_detail.value.id,
+                }
+
+                console.log(payload);
+            }
+
+            function onClickToAddressSelection() {
+                router.push(`/address-selection`)
+            }
             return {
                 products_detail,
                 seller,
@@ -187,7 +205,9 @@
                 itemSubtotal,
                 numberWithCommaFormatt,
                 addresses_detail,
-                totalPayment
+                totalPayment,
+                onClickPlaceOrder,
+                onClickToAddressSelection
             }
         }
     }

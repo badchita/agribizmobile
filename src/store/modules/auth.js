@@ -70,6 +70,7 @@ export default {
           commit('SET_ERROR_MESSAGE', '')
         })
         .catch((err) => {
+          console.log(err);
           const errorMsg = err.response
           const networkError = err.message
 

@@ -59,7 +59,7 @@
                     <ion-icon class="ion-margin-start" name="logo-facebook" slot="start" />Continue with Facebook
                 </ion-button>
             </ion-list>
-            <ion-loading :is-open="isLoading" message="Logging In..."></ion-loading>
+            <ion-loading :is-open="openLoading" message="Logging In..."></ion-loading>
         </ion-content>
     </ion-page>
 </template>
@@ -97,8 +97,9 @@
             let passwordVisibility = ref('password')
             let loginButtonDisabled = ref(true)
             let showError = ref(false)
+            let openLoading = ref(false)
 
-            let isLoading = computed(() => store.state.loading.status);
+            let errorMessage = computed(() => store.state.auth.errorMessage)
 
             function onClickIconEyeOff() {
                 passwordVisibility.value = 'text'
@@ -122,7 +123,7 @@
 
             async function onClickLogin() {
                 auth.password_confirmation = auth.password
-                store.dispatch('loading/start')
+                openLoading.value = true
                 store.dispatch('auth/login', auth).then(() => {
                         setTimeout(() => {
                             store.dispatch('toast/presentToast', {
@@ -136,7 +137,7 @@
                         showError.value = true
                     })
                     .finally(() => {
-                        store.dispatch('loading/finish')
+                        openLoading.value = false
                     })
             }
             return {
@@ -149,7 +150,8 @@
                 onClickLogin,
                 onClickCloseErrorIcon,
                 showError,
-                isLoading
+                errorMessage,
+                openLoading
             }
         }
     }

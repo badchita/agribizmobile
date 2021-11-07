@@ -48,6 +48,14 @@ const routes = [{
   {
     path: '/checkout/:quantity/:id',
     component: () => import('@/views/Pages/Checkout')
+  },
+  {
+    path: '/address-selection',
+    component: () => import('@/views/Pages/AddressSelection')
+  },
+  {
+    path: '/new-address',
+    component: () => import('@/views/Pages/NewAddress')
   }
 ]
 
