@@ -21,6 +21,13 @@ export default {
                 commit('SET_USER_DATA', response.data.data)
             })
         },
+        async updateUserData({
+            commit
+        }, payload) {
+            await UserAPI.update(payload).then((response) => {
+                commit('SET_USER_DATA', response.data.data)
+            })
+        },
         removeUserData({
             commit
         }) {

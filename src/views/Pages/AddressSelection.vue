@@ -5,16 +5,19 @@
         </ion-header>
 
         <ion-content>
-            <ion-item lines="none">
-                <ion-label class="detail-label">
-                    <label class="name-label ion-margin-end">Name</label>
-                    <ion-icon size="small" color="medium" name="checkmark" /> <br>
-                    <label>Mobile</label> <br>
-                    <label>street</label> <br>
-                    <label>Barangay, City</label> <br>
-                    <label>province</label>
-                </ion-label>
-            </ion-item>
+            <div v-if="address.length !== 0">
+                <ion-item v-for="(item, i) in address" :key="i" class="ion-margin-bottom" lines="none" button
+                    @click="onClickSelectAddress(item)">
+                    <ion-label class="detail-label">
+                        <label class="name-label ion-margin-end">{{item.name}}</label>
+                        <ion-icon v-if="userData.address_id === item.id" size="small" style="color: #58a89d;" name="checkmark" /> <br>
+                        <label>{{item.mobile}}</label> <br>
+                        <label>{{item.street_building}}</label> <br>
+                        <label>{{item.barangay}}, {{item.city}}</label> <br>
+                        <label>{{item.province}}</label>
+                    </ion-label>
+                </ion-item>
+            </div>
 
             <ion-item class="ion-margin-top" style="font-size: 14px;" lines="none">
                 <ion-label>Add a new address</ion-label>
@@ -27,18 +30,58 @@
 </template>
 
 <script>
+    import AddressesAPI from '@/api/addresses'
+
     import {
         useRouter
     } from 'vue-router'
+    import {
+        computed,
+        onMounted,
+        onUpdated,
+        ref
+    } from '@vue/runtime-core'
+    import {
+        useStore
+    } from 'vuex'
     export default {
         setup() {
+            onMounted(() => {
+                loadAddresses()
+            })
+            onUpdated(() => {
+                loadAddresses()
+            })
+
             const router = useRouter()
+            const store = useStore()
+
+            let address = ref({})
+
+            let userData = computed(() => store.state.user.userData)
 
             function onClickNewAddress() {
                 router.push(`/new-address`)
             }
+
+            function loadAddresses() {
+                let uId = router.currentRoute.value.params.user_id
+                AddressesAPI.list(uId, 'O').then((response) => {
+                    address.value = response.data
+                })
+            }
+
+            function onClickSelectAddress(item) {
+                userData.value.address_id = item.id
+                store.dispatch('user/updateUserData', userData.value).then(() => {
+                    router.go(-1)
+                })
+            }
             return {
-                onClickNewAddress
+                onClickNewAddress,
+                address,
+                onClickSelectAddress,
+                userData
             }
         }
     }

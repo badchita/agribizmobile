@@ -15,16 +15,16 @@
                     <ion-icon color="medium" name="chevron-forward" @click="onClickToAddressSelection" />
                 </ion-item>
                 <ion-item class="delivery-item" lines="none">
-                    <ion-label>Name | Mobile</ion-label>
+                    <ion-label>{{selected_address.name}} | {{selected_address.mobile}}</ion-label>
                 </ion-item>
                 <ion-item class="delivery-item" lines="none">
-                    <ion-label>Street</ion-label>
+                    <ion-label>{{selected_address.street_building}}</ion-label>
                 </ion-item>
                 <ion-item class="delivery-item" lines="none">
-                    <ion-label>Barangay, City, Region</ion-label>
+                    <ion-label>{{selected_address.barangay}}, {{selected_address.city}}</ion-label>
                 </ion-item>
                 <ion-item class="delivery-item" lines="none">
-                    <ion-label>State</ion-label>
+                    <ion-label>{{selected_address.province}}</ion-label>
                 </ion-item>
             </ion-item-group>
 
@@ -134,6 +134,8 @@
 
 <script>
     import ProductAPI from '@/api/product'
+    import OrderAPI from '@/api/orders'
+
     import {
         computed,
         onMounted,
@@ -147,6 +149,7 @@ import { useStore } from 'vuex'
         setup() {
             onMounted(() => {
                 loadProductDetail()
+                console.log(selected_address.value);
             })
 
             const router = useRouter()
@@ -157,6 +160,7 @@ import { useStore } from 'vuex'
             let seller = ref({})
 
             let userId = computed(() => store.state.user.userData.id)
+            let selected_address = computed(() => store.state.user.userData.selected_address)
 
             let totalPayment = computed(() => {
                 return itemSubtotal.value + addresses_detail.value.shipping_fee
@@ -173,6 +177,7 @@ import { useStore } from 'vuex'
 
                 ProductAPI.get(id).then((response) => {
                     products_detail.value = response.data.data
+                    console.log(products_detail.value);
                     seller.value = response.data.data.seller
                     addresses_detail.value = response.data.data.addresses_detail
                 }).catch((err) => {
@@ -190,13 +195,21 @@ import { useStore } from 'vuex'
                 let payload = {
                     user_id: userId.value,
                     product_id: products_detail.value.id,
+                    ship_from_address_id: addresses_detail.value.id,
+                    product_total_price: itemSubtotal.value,
+                    quantity: +quantity.value,
+                    ship_to_address_id: selected_address.value.id,
+                    order_total_price: totalPayment.value,
+                    seller_id: products_detail.value.seller.id
                 }
 
                 console.log(payload);
+
+                OrderAPI.add(payload)
             }
 
             function onClickToAddressSelection() {
-                router.push(`/address-selection`)
+                router.push(`/address-selection/${userId.value}`)
             }
             return {
                 products_detail,
@@ -207,7 +220,8 @@ import { useStore } from 'vuex'
                 addresses_detail,
                 totalPayment,
                 onClickPlaceOrder,
-                onClickToAddressSelection
+                onClickToAddressSelection,
+                selected_address
             }
         }
     }

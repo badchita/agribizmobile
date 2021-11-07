@@ -50,7 +50,7 @@ const routes = [{
     component: () => import('@/views/Pages/Checkout')
   },
   {
-    path: '/address-selection',
+    path: '/address-selection/:user_id',
     component: () => import('@/views/Pages/AddressSelection')
   },
   {
