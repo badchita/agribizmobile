@@ -56,6 +56,10 @@ const routes = [{
   {
     path: '/new-address',
     component: () => import('@/views/Pages/NewAddress')
+  },
+  {
+    path: '/order-pending',
+    component: () => import('@/views/Pages/OrderPending')
   }
 ]
 

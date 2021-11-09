@@ -300,13 +300,6 @@
                 // })
             }
 
-            function numberWithCommaFormatt(number) {
-                var n = parseFloat(number).toFixed(2)
-                var withComma = Number(n).toLocaleString('en')
-                return withComma
-            }
-
-
             async function presentAlert() {
                 const alert = await alertController.create({
                     header: 'Must Be Logged In',
@@ -332,7 +325,6 @@
                 onClickBuy,
                 quantity,
                 addresses_detail,
-                numberWithCommaFormatt,
                 isUserLoggedIn,
                 onClickLike,
                 like_products,

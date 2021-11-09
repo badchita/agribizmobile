@@ -25,4 +25,29 @@ ion-grid {
 
 .daily-discover-col {
     column-count: 2;
+    padding-bottom: 16px;
+
+    ion-card {
+        box-shadow: none;
+        border: 1px solid #F0F0F0;
+        text-align: left;
+
+        ion-card-header {
+            background: #F0F0F0;
+
+            ion-card-title {
+                font-size: 14px;
+            }
+
+        }
+
+        ion-card-content {
+            background: #F0F0F0;
+            font-size: 14px;
+        }
+    }
+
+    .even-card {
+        margin-top: auto;
+    }
 }

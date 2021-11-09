@@ -21,6 +21,11 @@
     </ion-header>
 
     <ion-content>
+      <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+      </ion-refresher>
+
       <!-- top products -->
       <ion-grid>
         <ion-row>
@@ -109,7 +114,7 @@
         </ion-row>
         <ion-row>
           <ion-col class="daily-discover-col">
-            <ion-card v-for="item in product" :key="item" class="slide-product-card" button @click="onClickProductCard(item.id)">
+            <ion-card v-for="item in product" :key="item" :class="product.length % 2 === 0 ? 'even-card' : ''" button @click="onClickProductCard(item.id)">
               <img src="@/assets/images/demo-top-product.jpg" />
               <ion-card-header>
                 <ion-card-title>{{item.name}}</ion-card-title>
@@ -136,7 +141,9 @@
   import {
     onMounted
   } from '@vue/runtime-core';
-import { useRouter } from 'vue-router';
+  import {
+    useRouter
+  } from 'vue-router';
   export default {
     name: 'Home',
     components: {},
@@ -160,11 +167,16 @@ import { useRouter } from 'vue-router';
       function onClickProductCard(id) {
         router.push(`/product-detail/${id}`)
       }
-      function numberWithCommaFormatt(number) {
-                var n = parseFloat(number).toFixed(2)
-                var withComma = Number(n).toLocaleString('en')
-                return withComma
-            }
+
+      function doRefresh(event) {
+        loadProduct()
+          .finally(() => {
+            setTimeout(() => {
+              if (event)
+                event.target.complete()
+            }, 500)
+          })
+      }
 
       async function loadProduct() {
         await ProductAPI.list().then((response) => {
@@ -178,7 +190,7 @@ import { useRouter } from 'vue-router';
         slideOptsFeatProd,
         product,
         onClickProductCard,
-        numberWithCommaFormatt
+        doRefresh
       }
     }
   }

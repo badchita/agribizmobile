@@ -1,0 +1,32 @@
+ion-card {
+    text-align: center;
+    top: 20%;
+    --background: #58a89d;
+
+    .card-title-item {
+        color: white;
+        padding-left: 30%;
+        text-align: center;
+    }
+
+    ion-icon {
+        color: white;
+    }
+
+    ion-label {
+        color: white;
+    }
+
+    ion-item {
+        --background: transparent;
+
+        ion-button {
+            border: 1px solid white;
+            width: 50%;
+            height: 40px;
+            text-transform: none;
+            --color: white;
+            --box-shadow: none;
+        }
+    }
+}

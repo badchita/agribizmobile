@@ -50,6 +50,7 @@
     heart,
     add,
     checkmark,
+    alertCircle,
   } from 'ionicons/icons';
 
   addIcons({
@@ -87,6 +88,7 @@
     'heart': heart,
     'add': add,
     'checkmark': checkmark,
+    'alert-circle': alertCircle,
   });
 
   export default ({

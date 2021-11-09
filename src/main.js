@@ -113,10 +113,20 @@ import './theme/variables.css';
 
 import Header from '@/components/Header'
 import StarRating from 'vue-star-rating'
+import helpers from '@/globals/helpers.js'
+import permissions from '@/globals/permissions.js'
+
+var mixin = {
+  methods: {
+    ...helpers,
+    ...permissions
+  }
+}
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(store)
+  .mixin(mixin)
 
 app.component('Header', Header)
 app.component('StarRating', StarRating)

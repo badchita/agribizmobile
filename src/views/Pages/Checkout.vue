@@ -185,12 +185,6 @@ import { useStore } from 'vuex'
                 })
             }
 
-            function numberWithCommaFormatt(number) {
-                var n = parseFloat(number).toFixed(2)
-                var withComma = Number(n).toLocaleString('en')
-                return withComma
-            }
-
             function onClickPlaceOrder() {
                 let payload = {
                     user_id: userId.value,
@@ -203,9 +197,9 @@ import { useStore } from 'vuex'
                     seller_id: products_detail.value.seller.id
                 }
 
-                console.log(payload);
-
-                OrderAPI.add(payload)
+                OrderAPI.add(payload).then(() => {
+                    router.push('/order-pending')
+                })
             }
 
             function onClickToAddressSelection() {
@@ -216,7 +210,6 @@ import { useStore } from 'vuex'
                 seller,
                 quantity,
                 itemSubtotal,
-                numberWithCommaFormatt,
                 addresses_detail,
                 totalPayment,
                 onClickPlaceOrder,
