@@ -6,7 +6,11 @@ import Tabs from '@/views/Pages/Tabs'
 
 const routes = [{
     path: '/',
-    redirect: '/tabs/home'
+    redirect: '/splash'
+  },
+  {
+    path: '/splash',
+    component: () => import('@/views/Pages/SplashScreen')
   },
   {
     path: '/tabs/',
