@@ -114,8 +114,9 @@
         </ion-row>
         <ion-row>
           <ion-col class="daily-discover-col">
-            <ion-card v-for="item in product" :key="item" :class="product.length % 2 === 0 ? 'even-card' : ''" button @click="onClickProductCard(item.id)">
-              <img src="@/assets/images/demo-top-product.jpg" />
+            <ion-card v-for="item in product" :key="item" :class="product.length % 2 === 0 ? 'even-card' : ''" button
+              @click="onClickProductCard(item.id)">
+              <img :src="getThumbnail(item.thumbnail_name)" height="140" style="object-fit: contain;" />
               <ion-card-header>
                 <ion-card-title>{{item.name}}</ion-card-title>
               </ion-card-header>
@@ -135,6 +136,8 @@
 
 <script>
   import ProductAPI from '@/api/product'
+  import ResourceURL from '@/api/resourceURL'
+
   import {
     ref
   } from '@vue/reactivity';
@@ -152,6 +155,8 @@
         loadProduct()
       })
       const router = useRouter()
+
+      let thumbnailPath = ref('')
       let product = ref({})
 
       const slideOptsTopProd = {
@@ -178,6 +183,14 @@
           })
       }
 
+      function getThumbnail(fileName) {
+        if (fileName) {
+          return thumbnailPath.value = ResourceURL.api + fileName
+        } else {
+          return thumbnailPath.value = 'https://www.fcprop.net/images/noimage.png'
+        }
+      }
+
       async function loadProduct() {
         await ProductAPI.list().then((response) => {
           product.value = response.data
@@ -190,7 +203,9 @@
         slideOptsFeatProd,
         product,
         onClickProductCard,
-        doRefresh
+        doRefresh,
+        getThumbnail,
+        thumbnailPath
       }
     }
   }

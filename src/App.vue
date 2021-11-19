@@ -51,6 +51,11 @@
     add,
     checkmark,
     alertCircle,
+    readerOutline,
+    cubeOutline,
+    busOutline,
+    cardOutline,
+    starOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -89,6 +94,11 @@
     'add': add,
     'checkmark': checkmark,
     'alert-circle': alertCircle,
+    'reader-outline': readerOutline,
+    'cube-outline': cubeOutline,
+    'bus-outline': busOutline,
+    'card-outline': cardOutline,
+    'star-outline': starOutline,
   });
 
   export default ({

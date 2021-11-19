@@ -47,6 +47,45 @@
     <ion-content>
       <ion-list>
         <ion-item lines="none" button>
+          <ion-icon style="color: #483D8B;" name="reader-outline" slot="start" />
+          <ion-label>My Purchase</ion-label>
+          <label style="font-size: 12px;">Purchase History</label>
+          <ion-icon color="medium" name="chevron-forward-outline" slot="end" />
+        </ion-item>
+        <ion-row class="ion-text-center">
+          <ion-col size="3">
+            <ion-button fill="clear">
+              <ion-icon color="medium" name="card-outline" />
+            </ion-button>
+            <br />
+            To Pay
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear">
+              <ion-icon color="medium" name="cube-outline" />
+            </ion-button>
+            <br />
+            To Ship
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear">
+              <ion-icon color="medium" name="bus-outline" />
+            </ion-button>
+            <br />
+            To Recieve
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear">
+              <ion-icon color="medium" name="star-outline" />
+            </ion-button>
+            <br />
+            To Rate
+          </ion-col>
+        </ion-row>
+      </ion-list>
+
+      <ion-list>
+        <ion-item lines="none" button>
           <ion-icon style="color: #483D8B;" name="person-outline" slot="start" />
           <ion-label>My Account Settings</ion-label>
           <ion-icon color="medium" name="chevron-forward-outline" slot="end" />
