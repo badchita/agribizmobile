@@ -31,12 +31,18 @@ ion-grid {
         box-shadow: none;
         border: 1px solid #F0F0F0;
         text-align: left;
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+        margin: 0 !important;
+        margin-bottom: 16px !important;
 
         ion-card-header {
             background: #F0F0F0;
 
             ion-card-title {
                 font-size: 14px;
+                word-wrap: break-word;
             }
 
         }

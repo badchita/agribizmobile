@@ -1,0 +1,14 @@
+ion-segment {
+    ion-segment-button {
+        --indicator-color: #58a89d;
+        --color-checked: #58a89d;
+    }
+
+    ion-label {
+        text-transform: none;
+    }
+}
+
+ion-segment::-webkit-scrollbar {
+    display: none;
+}

@@ -15,14 +15,15 @@
         </ion-header>
 
         <ion-content>
-            <ion-slides pager>
+            <!-- <ion-slides pager>
                 <ion-slide v-for="(item, i) in 3" :key="i">
-                    <img style="width: 100%;" src="@/assets/images/demo-top-product.jpg" />
+                    
                 </ion-slide>
-            </ion-slides>
+            </ion-slides> -->
+            <img style="object-fit: contain;" width="420" height="310" :src="getThumbnail(products.thumbnail_name)" />
             <ion-item-group>
                 <ion-item lines="none">
-                    <ion-badge>{{products.product_status}}</ion-badge>
+                    <ion-badge :color="products.product_status === 'Available' ? 'primary' : 'danger'">{{products.product_status}}</ion-badge>
                     <ion-label class="ion-margin-start" style="font-size: 18px;">
                         {{products.name}}
                     </ion-label>
@@ -158,7 +159,7 @@
                     Add to Cart
                 </ion-button>
                 <ion-button v-if="products.product_status === 'Available'" expand="full"
-                    style="--background: var(--ion-color-primary)" @click="onClickBuy">
+                    style="--background: var(--ion-color-primary)"  :disabled="buttonDisabled" @click="onClickBuy">
                     <ion-label>Buy Now</ion-label>
                 </ion-button>
                 <ion-button v-else expand="full"
@@ -173,6 +174,7 @@
 <script>
     import ProductAPI from '@/api/product'
     import LikeProductsAPI from '@/api/like_products'
+    import ResourceURL from '@/api/resourceURL'
 
     import {
         useRouter
@@ -180,7 +182,8 @@
     import {
         computed,
         onMounted,
-        ref
+        ref,
+        watch
     } from '@vue/runtime-core'
     import {
         useStore
@@ -200,13 +203,25 @@
             let products = ref({})
             let seller = ref({})
             let seeMore = ref(false)
-            let quantity = ref(0)
+            let quantity = ref()
             let addresses_detail = ref({})
             let like_products = ref([])
             let likeButtonStatus = ref(false)
+            let thumbnailPath = ref('')
+            let buttonDisabled = ref(false)
 
             let isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
             let userId = computed(() => store.state.user.userData.id)
+
+            watch(quantity, function (v) {
+                if (v > products.value.quantity) {
+                    store.dispatch('toast/presentToast', {
+                        m: '<strong>Not Enough</strong> Stocks',
+                        type: 'error'
+                    })
+                    buttonDisabled.value = true
+                }
+            })
 
             function onClickGoBack() {
                 router.go(-1)
@@ -300,6 +315,14 @@
                 // })
             }
 
+            function getThumbnail(fileName) {
+                if (fileName) {
+                    return thumbnailPath.value = ResourceURL.api + fileName
+                } else {
+                    return thumbnailPath.value = 'https://www.fcprop.net/images/noimage.png'
+                }
+            }
+
             async function presentAlert() {
                 const alert = await alertController.create({
                     header: 'Must Be Logged In',
@@ -329,7 +352,9 @@
                 onClickLike,
                 like_products,
                 userId,
-                likeButtonStatus
+                likeButtonStatus,
+                getThumbnail,
+                buttonDisabled
             }
         }
     }

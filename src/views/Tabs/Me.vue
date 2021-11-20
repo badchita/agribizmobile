@@ -46,7 +46,7 @@
 
     <ion-content>
       <ion-list>
-        <ion-item lines="none" button>
+        <ion-item lines="none" button @click="onClickMyPurchase">
           <ion-icon style="color: #483D8B;" name="reader-outline" slot="start" />
           <ion-label>My Purchase</ion-label>
           <label style="font-size: 12px;">Purchase History</label>
@@ -137,11 +137,16 @@
       function onClickSignUp() {
         router.push(`/sign-up`)
       }
+
+      function onClickMyPurchase() {
+        router.push(`/my-purchases/${'delivered'}`)
+      }
       return {
         onClickLogin,
         onClickSignUp,
         isUserLoggedIn,
-        userData
+        userData,
+        onClickMyPurchase
       }
     }
   }

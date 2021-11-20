@@ -64,6 +64,10 @@ const routes = [{
   {
     path: '/order-pending',
     component: () => import('@/views/Pages/OrderPending')
+  },
+  {
+    path: '/my-purchases/:segment',
+    component: () => import('@/views/Pages/MyPurchase')
   }
 ]
 
