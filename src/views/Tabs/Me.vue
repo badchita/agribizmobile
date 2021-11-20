@@ -46,7 +46,7 @@
 
     <ion-content>
       <ion-list>
-        <ion-item lines="none" button @click="onClickMyPurchase">
+        <ion-item lines="none" button @click="onClickMyPurchase('delivered')">
           <ion-icon style="color: #483D8B;" name="reader-outline" slot="start" />
           <ion-label>My Purchase</ion-label>
           <label style="font-size: 12px;">Purchase History</label>
@@ -54,28 +54,28 @@
         </ion-item>
         <ion-row class="ion-text-center">
           <ion-col size="3">
-            <ion-button fill="clear">
-              <ion-icon color="medium" name="card-outline" />
+            <ion-button fill="clear" @click="onClickMyPurchase('pending')">
+              <ion-icon color="medium" name="timer-outline" />
             </ion-button>
             <br />
-            To Pay
+            Pending
           </ion-col>
           <ion-col size="3">
-            <ion-button fill="clear">
-              <ion-icon color="medium" name="cube-outline" />
+            <ion-button fill="clear" @click="onClickMyPurchase('accepted')">
+              <ion-icon color="medium" name="checkmark-circle-outline" />
             </ion-button>
             <br />
-            To Ship
+            Accepted
           </ion-col>
           <ion-col size="3">
-            <ion-button fill="clear">
+            <ion-button fill="clear" @click="onClickMyPurchase('torecieve')">
               <ion-icon color="medium" name="bus-outline" />
             </ion-button>
             <br />
             To Recieve
           </ion-col>
           <ion-col size="3">
-            <ion-button fill="clear">
+            <ion-button fill="clear" @click="onClickMyPurchase('delivered')">
               <ion-icon color="medium" name="star-outline" />
             </ion-button>
             <br />
@@ -138,15 +138,15 @@
         router.push(`/sign-up`)
       }
 
-      function onClickMyPurchase() {
-        router.push(`/my-purchases/${'delivered'}`)
+      function onClickMyPurchase(segment) {
+        router.push(`/my-purchases/${segment}`)
       }
       return {
         onClickLogin,
         onClickSignUp,
         isUserLoggedIn,
         userData,
-        onClickMyPurchase
+        onClickMyPurchase,
       }
     }
   }

@@ -56,6 +56,8 @@
     busOutline,
     cardOutline,
     starOutline,
+    timerOutline,
+    checkmarkCircleOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -99,6 +101,8 @@
     'bus-outline': busOutline,
     'card-outline': cardOutline,
     'star-outline': starOutline,
+    'timer-outline': timerOutline,
+    'checkmark-circle-outline': checkmarkCircleOutline,
   });
 
   export default ({
