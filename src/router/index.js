@@ -68,6 +68,10 @@ const routes = [{
   {
     path: '/my-purchases/:segment',
     component: () => import('@/views/Pages/MyPurchase')
+  },
+  {
+    path: '/rate-product/:id',
+    component: () => import('@/views/Pages/RateProduct')
   }
 ]
 

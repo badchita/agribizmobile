@@ -31,15 +31,15 @@
         </ion-row>
         <ion-row style="font-size: 12px; color: #58a89d;">
             <ion-col size="1">
-                <ion-icon size="small" name="checkmark-circle-outline" />
+                <ion-icon size="small" name="cube-outline" />
             </ion-col>
             <ion-col>
-                <ion-label>Seller is Processing your Shipment</ion-label>
+                <ion-label>Product Delivered</ion-label>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col size="12">
-                <ion-button class="ion-float-right" expand="full" @click="onClickUpdateStatus(item)">
+                <ion-button expand="full" @click="onClickUpdateStatus(item)">
                     Recieved
                 </ion-button>
             </ion-col>

@@ -58,6 +58,7 @@
     starOutline,
     timerOutline,
     checkmarkCircleOutline,
+    checkboxOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -103,6 +104,7 @@
     'star-outline': starOutline,
     'timer-outline': timerOutline,
     'checkmark-circle-outline': checkmarkCircleOutline,
+    'checkbox-outline': checkboxOutline,
   });
 
   export default ({

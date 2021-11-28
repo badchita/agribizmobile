@@ -34,7 +34,7 @@
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
-                    <StarRating :rating="4.6" :show-rating="true" :read-only="true" :increment="0.01" :star-size="18" />
+                    <StarRating :rating="4" :show-rating="true" :read-only="true" :star-size="18" />
                     <ion-label class="ion-margin-start" color="medium" style="font-size: 14px;">Stocks:
                         {{products.quantity}}</ion-label>
                     <ion-button v-if="!likeButtonStatus" fill="clear" color="medium" @click="onClickLike()">

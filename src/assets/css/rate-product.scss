@@ -1,0 +1,18 @@
+.item-starrating {
+    margin: auto;
+    padding: 0;
+
+    .star-rating {
+        margin: auto;
+        margin-top: 16px;
+    }
+}
+
+ion-textarea {
+    border: 1px solid rgb(146, 148, 156, .1);
+    margin-bottom: 16px;
+    margin-top: 16px;
+    --padding-start: 12px !important;
+    --placeholder-color: var(--ion-color-medium);
+    --background: rgb(146, 148, 156, .1);
+}

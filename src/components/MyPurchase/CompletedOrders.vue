@@ -31,10 +31,22 @@
         </ion-row>
         <ion-row style="font-size: 12px; color: #58a89d;">
             <ion-col size="1">
-                <ion-icon size="small" name="checkmark-circle-outline" />
+                <ion-icon size="small" name="checkbox-outline" />
             </ion-col>
-            <ion-col >
-                <ion-label>Seller is Processing your Shipment</ion-label>
+            <ion-col>
+                <ion-label>Order Complete</ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col v-if="item.rated === 0" size="3.5">
+                <ion-button style="--background: transparent; color: #58a89d; --border-color: #58a89d;" expand="full" @click="onClickRate(item.product_id)">
+                    Rate
+                </ion-button>
+            </ion-col>
+            <ion-col size="3.2">
+                <ion-button expand="full" @click="onClickBuyAgain(item.product_id)">
+                    Buy Again
+                </ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -46,6 +58,7 @@
     import {
         ref
     } from '@vue/reactivity'
+import { useRouter } from 'vue-router'
     export default {
         props: {
             completedOrders: {
@@ -54,6 +67,7 @@
             },
         },
         setup() {
+            const router = useRouter()
             let thumbnailPath = ref('')
 
             function getThumbnail(fileName) {
@@ -63,8 +77,18 @@
                     return thumbnailPath.value = 'https://www.fcprop.net/images/noimage.png'
                 }
             }
+
+            function onClickBuyAgain(id) {
+                router.push(`/product-detail/${id}`)
+            }
+
+            function onClickRate(id) {
+                router.push(`/rate-product/${id}`)
+            }
             return {
-                getThumbnail
+                getThumbnail,
+                onClickBuyAgain,
+                onClickRate
             }
         }
     }

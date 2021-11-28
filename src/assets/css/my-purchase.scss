@@ -18,7 +18,8 @@ ion-grid {
 }
 
 ion-button {
+    text-transform: none;
+    width: 100px;
     --background: #58a89d;
     --box-shadow: none;
-    text-transform: none
 }
