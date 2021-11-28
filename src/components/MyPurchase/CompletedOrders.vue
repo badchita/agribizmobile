@@ -39,7 +39,7 @@
         </ion-row>
         <ion-row>
             <ion-col v-if="item.rated === 0" size="3.5">
-                <ion-button style="--background: transparent; color: #58a89d; --border-color: #58a89d;" expand="full" @click="onClickRate(item.product_id)">
+                <ion-button style="--background: transparent; color: #58a89d; --border-color: #58a89d;" expand="full" @click="onClickRate(item.product_id, item.id)">
                     Rate
                 </ion-button>
             </ion-col>
@@ -82,8 +82,8 @@ import { useRouter } from 'vue-router'
                 router.push(`/product-detail/${id}`)
             }
 
-            function onClickRate(id) {
-                router.push(`/rate-product/${id}`)
+            function onClickRate(product_id, order_id) {
+                router.push(`/rate-product/${product_id}/${order_id}`)
             }
             return {
                 getThumbnail,

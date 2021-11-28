@@ -86,7 +86,7 @@
             })
 
             function loadProductDetail() {
-                const id = router.currentRoute.value.params.id
+                const id = router.currentRoute.value.params.product_id
                 ProductAPI.get(id).then((response) => {
                     products.value = response.data.data
                 }).catch((err) => {
@@ -115,7 +115,8 @@
                 anonymousValue.value === false ? product_ratings.value.anonymous = 0 : product_ratings.value.anonymous =
                     1
                 product_ratings.value.user_id = userData.value.id
-                product_ratings.value.product_id = +router.currentRoute.value.params.id
+                product_ratings.value.product_id = +router.currentRoute.value.params.product_id
+                product_ratings.value.order_id = +router.currentRoute.value.params.order_id
                 product_ratings.value.rating = starRating.value
 
                 ProductRatingAPI.add(product_ratings.value).then((response) => {

@@ -70,7 +70,7 @@ const routes = [{
     component: () => import('@/views/Pages/MyPurchase')
   },
   {
-    path: '/rate-product/:id',
+    path: '/rate-product/:product_id/:order_id',
     component: () => import('@/views/Pages/RateProduct')
   }
 ]
