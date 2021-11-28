@@ -8,7 +8,7 @@
                 <ion-title class="header-title">
                     Rate Product
                 </ion-title>
-                <ion-buttons style="color: #58a89d;" slot="end"> Submit
+                <ion-buttons style="color: #58a89d;" slot="end" @click="onClickSubmit"> Submit
                 </ion-buttons>
             </ion-toolbar>
         </ion-header>
@@ -21,15 +21,17 @@
                 <ion-label class="ion-margin-start">
                     {{products.name}}
                     <br>
-                    <h5 style="color: var(--ion-color-medium); font-size: 12px;">₱{{numberWithCommaFormatt(products.price)}}</h5>
+                    <h5 style="color: var(--ion-color-medium); font-size: 12px;">
+                        ₱{{numberWithCommaFormatt(products.price)}}</h5>
                 </ion-label>
             </ion-item>
             <ion-item class="item-starrating" lines="none">
-                <StarRating class="star-rating" :rating="5" :show-rating="false" :star-size="40" :padding="16"
-                    :rounded-corners="true" />
+                <StarRating class="star-rating" @update:rating="setRating" :rating="5" :show-rating="false"
+                    :star-size="40" :padding="16" :rounded-corners="true" />
             </ion-item>
             <ion-item mode="ios" lines="full">
-                <ion-textarea placeholder="Share your experience with others!" rows="9" />
+                <ion-textarea v-model="product_ratings.review" placeholder="Share your experience with others!"
+                    rows="9" />
             </ion-item>
             <ion-item>
                 <ion-label class="ion-text-wrap">
@@ -44,6 +46,7 @@
 
 <script>
     import ProductAPI from '@/api/product'
+    import ProductRatingAPI from '@/api/product_ratings'
     import ResourceURL from '@/api/resourceURL'
 
     import {
@@ -67,8 +70,10 @@
             const store = useStore()
 
             let products = ref({})
+            let product_ratings = ref({})
             let thumbnailPath = ref('')
             let anonymousValue = ref(false)
+            let starRating = ref(5)
 
             const userData = computed(() => store.state.user.userData)
 
@@ -102,13 +107,32 @@
                 }
             }
 
+            function setRating(rate) {
+                starRating.value = rate
+            }
+
+            function onClickSubmit() {
+                anonymousValue.value === false ? product_ratings.value.anonymous = 0 : product_ratings.value.anonymous =
+                    1
+                product_ratings.value.user_id = userData.value.id
+                product_ratings.value.product_id = +router.currentRoute.value.params.id
+                product_ratings.value.rating = starRating.value
+
+                ProductRatingAPI.add(product_ratings.value).then((response) => {
+                    console.log(response);
+                })
+            }
+
             return {
                 products,
                 getThumbnail,
                 anonymousWord,
                 userData,
                 anonymousValue,
-                username
+                username,
+                onClickSubmit,
+                product_ratings,
+                setRating
             }
         }
     }
