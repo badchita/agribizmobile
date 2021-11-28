@@ -15,8 +15,10 @@ ion-segment::-webkit-scrollbar {
 
 ion-grid {
     background: white;
+}
 
-    ion-row {}
-
-    ion-col {}
+ion-button {
+    --background: #58a89d;
+    --box-shadow: none;
+    text-transform: none
 }

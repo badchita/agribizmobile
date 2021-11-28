@@ -15,6 +15,8 @@
             <PendingOrders v-if="activeSegment === 'pending'" :pendingOrders="pendingOrders" />
             <AcceptedOrders v-if="activeSegment === 'accepted'" :acceptedOrders="acceptedOrders" />
             <ToRecieveOrders v-if="activeSegment === 'torecieve'" :toRecieveOrders="toRecieveOrders" />
+            <DeliveredOrders v-if="activeSegment === 'delivered'" :deliveredOrders="deliveredOrders" />
+            <CompletedOrders v-if="activeSegment === 'completed'" :completedOrders="completedOrders" />
         </ion-content>
     </ion-page>
 </template>
@@ -25,6 +27,8 @@
     import PendingOrders from '@/components/MyPurchase/PendingOrders'
     import AcceptedOrders from '@/components/MyPurchase/AcceptedOrders'
     import ToRecieveOrders from '@/components/MyPurchase/ToRecieveOrders'
+    import DeliveredOrders from '@/components/MyPurchase/DeliveredOrders'
+    import CompletedOrders from '@/components/MyPurchase/CompletedOrders'
 
     import {
         computed,
@@ -43,7 +47,9 @@
         components: {
             PendingOrders,
             AcceptedOrders,
-            ToRecieveOrders
+            ToRecieveOrders,
+            DeliveredOrders,
+            CompletedOrders
         },
         setup() {
             onMounted(() => {
@@ -88,8 +94,16 @@
             let pendingOrders = ref([])
             let acceptedOrders = ref([])
             let toRecieveOrders = ref([])
+            let deliveredOrders = ref([])
+            let completedOrders = ref([])
+
+            let delivered = ref(null)
 
             let userData = computed(() => store.state.user.userData)
+
+            function test() {
+                console.log(delivered.value);
+            }
 
             function onIonChangeSegment(ev) {
                 activeSegment.value = ev.detail.value;
@@ -124,6 +138,12 @@
                         case '2':
                             toRecieveOrders.value.push(value)
                             break
+                        case '3':
+                            deliveredOrders.value.push(value)
+                            break
+                        case '4':
+                            completedOrders.value.push(value)
+                            break
                     }
                 })
             }
@@ -134,7 +154,10 @@
                 onClickSegmentButton,
                 pendingOrders,
                 acceptedOrders,
-                toRecieveOrders
+                toRecieveOrders,
+                deliveredOrders,
+                completedOrders,
+                test
             }
         }
     }

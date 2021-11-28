@@ -20,5 +20,8 @@ export default {
     },
     search(name) {
         return api.get('order/search/' + name)
+    },
+    updateStatus(payload) {
+        return api.patch('/order/update_status', payload)
     }
 }

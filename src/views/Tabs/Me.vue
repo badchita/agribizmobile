@@ -88,7 +88,10 @@
             To Recieve
           </ion-col>
           <ion-col size="3">
-            <ion-button fill="clear" @click="onClickMyPurchase('delivered')">
+            <ion-button fill="clear" @click="onClickMyPurchase('completed')">
+              <ion-badge v-if="toRateOrders.length > 0" class="notification-order-badge">
+                {{toRateOrders.length}}
+              </ion-badge>
               <ion-icon color="medium" name="star-outline" />
             </ion-button>
             <br />
@@ -126,7 +129,6 @@
   } from 'vuex'
   import {
     onMounted,
-    // onUpdated,
     watch
   } from '@vue/runtime-core'
   export default {
@@ -145,14 +147,12 @@
       let pendingOrders = ref([])
       let acceptedOrders = ref([])
       let toRecieveOrders = ref([])
+      let toRateOrders = ref([])
 
       const userData = computed(() => store.state.user.userData)
       const isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
       const userId = computed(() => store.state.auth.userId)
 
-      // watch(userData, function () {
-      //   getOrderStatus()
-      // })
       watch(userId, function () {
         store.dispatch('user/loadUserData', userId.value).then(() => {
           getOrderStatus()
@@ -163,11 +163,11 @@
         store.dispatch('user/loadUserData', userId.value).then(() => {
           getOrderStatus()
         }).finally(() => {
-            setTimeout(() => {
-              if (event)
-                event.target.complete()
-            }, 500)
-          })
+          setTimeout(() => {
+            if (event)
+              event.target.complete()
+          }, 500)
+        })
       }
 
       function onClickLogin() {
@@ -186,6 +186,7 @@
         pendingOrders.value = []
         acceptedOrders.value = []
         toRecieveOrders.value = []
+        toRateOrders.value = []
         orders = userData.value.orders
         console.log(orders);
         orders.forEach((value) => {
@@ -202,6 +203,11 @@
             toRecieveOrders.value.push(value)
           }
           break
+          case '4': {
+            if (value.rated === 0)
+              toRateOrders.value.push(value)
+          }
+          break
           }
         })
       }
@@ -214,6 +220,7 @@
         pendingOrders,
         acceptedOrders,
         toRecieveOrders,
+        toRateOrders,
         doRefresh
       }
     }

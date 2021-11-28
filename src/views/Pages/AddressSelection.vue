@@ -38,7 +38,6 @@
     import {
         computed,
         onMounted,
-        onUpdated,
         ref
     } from '@vue/runtime-core'
     import {
@@ -47,9 +46,6 @@
     export default {
         setup() {
             onMounted(() => {
-                loadAddresses()
-            })
-            onUpdated(() => {
                 loadAddresses()
             })
 
