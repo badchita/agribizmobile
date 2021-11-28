@@ -44,7 +44,8 @@
                         <ion-text>{{products_detail.name}}</ion-text> <br>
                         <ion-text class="product-detail-quantity-text">Stocks: {{products_detail.quantity}}</ion-text>
                         <br>
-                        <ion-text class="product-detail-quantity-text">₱{{numberWithCommaFormatt(products_detail.price)}}</ion-text>
+                        <ion-text class="product-detail-quantity-text">
+                            ₱{{numberWithCommaFormatt(products_detail.price)}}</ion-text>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -139,17 +140,18 @@
     import {
         computed,
         onMounted,
-        ref
+        ref,
     } from '@vue/runtime-core'
     import {
         useRouter
     } from 'vue-router'
-import { useStore } from 'vuex'
+    import {
+        useStore
+    } from 'vuex'
     export default {
         setup() {
             onMounted(() => {
                 loadProductDetail()
-                console.log(selected_address.value);
             })
 
             const router = useRouter()
@@ -177,7 +179,6 @@ import { useStore } from 'vuex'
 
                 ProductAPI.get(id).then((response) => {
                     products_detail.value = response.data.data
-                    console.log(products_detail.value);
                     seller.value = response.data.data.seller
                     addresses_detail.value = response.data.data.addresses_detail
                 }).catch((err) => {

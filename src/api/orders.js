@@ -10,14 +10,10 @@ export default {
     update(order) {
         return api.put('order', order)
     },
-    list(status) {
-        if (status === 'O') {
-            return api.get(`orders/` + status)
-        } else if (status === 'V') {
-            return api.get(`orders/` + status)
-        } else {
-            return api.get(`orders`)
-        }
+    list(params) {
+        return api.get(`/customer/orders/`, {
+            params
+        })
     },
     delete(id) {
         return api.delete('order', id)

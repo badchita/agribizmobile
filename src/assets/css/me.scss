@@ -83,3 +83,14 @@ ion-col {
         font-size: 28px;
     }
 }
+
+.notification-order-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 14px;
+    font-size: 10px;
+    font-weight: lighter;
+    background: red;
+    opacity: .8;
+    color: white;
+}

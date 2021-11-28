@@ -10,7 +10,7 @@
                     <ion-card-title>
                         <ion-item class="card-title-item" lines="none">
                             <ion-icon name="alert-circle" />
-                                <h3>Pending</h3>
+                            <h3>Pending</h3>
                         </ion-item>
                     </ion-card-title>
                     <ion-card-subtitle>
@@ -21,7 +21,7 @@
                     <ion-card-content>
                         <ion-item lines="none">
                             <ion-button expand="block" fill="clear" @click="onClickHome">Home</ion-button>
-                            <ion-button expand="block" fill="clear">My Purchase</ion-button>
+                            <ion-button expand="block" fill="clear" @click="onClickPending">My Purchase</ion-button>
                         </ion-item>
                     </ion-card-content>
                 </ion-card-header>
@@ -31,14 +31,24 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+    import {
+        useRouter
+    } from 'vue-router'
     export default {
         setup() {
             const router = useRouter()
+
             function onClickHome() {
                 router.push('/tabs/')
             }
-            return {onClickHome}
+
+            function onClickPending() {
+                router.push(`/my-purchases/pending`)
+            }
+            return {
+                onClickHome,
+                onClickPending
+            }
         }
     }
 </script>

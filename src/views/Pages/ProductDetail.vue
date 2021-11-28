@@ -220,6 +220,8 @@
                         type: 'error'
                     })
                     buttonDisabled.value = true
+                } else {
+                    buttonDisabled.value = false
                 }
             })
 

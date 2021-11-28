@@ -116,8 +116,10 @@
           <ion-col class="daily-discover-col">
             <ion-card v-for="item in product" :key="item" :class="product.length % 2 === 0 ? 'even-card' : ''" button
               @click="onClickProductCard(item.id)">
-              <img v-if="item.thumbnail_name === null" :src="getThumbnail(item.thumbnail_name)" height="140" width="200" style="object-fit: fill;" />
-              <img v-else :src="getThumbnail(item.thumbnail_name)" height="140" width="200" style="object-fit: contain;" />
+              <img v-if="item.thumbnail_name === null" :src="getThumbnail(item.thumbnail_name)" height="140" width="200"
+                style="object-fit: fill;" />
+              <img v-else :src="getThumbnail(item.thumbnail_name)" height="140" width="200"
+                style="object-fit: contain;" />
               <ion-card-header>
                 <ion-card-title>{{item.name}}</ion-card-title>
               </ion-card-header>
@@ -193,7 +195,11 @@
       }
 
       async function loadProduct() {
-        await ProductAPI.list().then((response) => {
+        const params = {
+          offset: 0,
+          limit: 10,
+        }
+        await ProductAPI.list(params).then((response) => {
           product.value = response.data
         }).catch((err) => {
           console.error(err);

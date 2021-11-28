@@ -131,7 +131,7 @@
                                 type: ''
                             })
                         }, 1000)
-                        router.push('/tabs/me')
+                        router.push(`/tabs/me`)
                     }).catch((err) => {
                         console.error(err);
                         showError.value = true

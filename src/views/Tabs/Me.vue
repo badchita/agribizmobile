@@ -45,6 +45,10 @@
     </ion-header>
 
     <ion-content>
+      <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+      </ion-refresher>
       <ion-list>
         <ion-item lines="none" button @click="onClickMyPurchase('delivered')">
           <ion-icon style="color: #483D8B;" name="reader-outline" slot="start" />
@@ -56,6 +60,9 @@
           <ion-col size="3">
             <ion-button fill="clear" @click="onClickMyPurchase('pending')">
               <ion-icon color="medium" name="timer-outline" />
+              <ion-badge v-if="pendingOrders.length > 0" class="notification-order-badge">
+                {{pendingOrders.length}}
+              </ion-badge>
             </ion-button>
             <br />
             Pending
@@ -63,6 +70,9 @@
           <ion-col size="3">
             <ion-button fill="clear" @click="onClickMyPurchase('accepted')">
               <ion-icon color="medium" name="checkmark-circle-outline" />
+              <ion-badge v-if="acceptedOrders.length > 0" class="notification-order-badge">
+                {{acceptedOrders.length}}
+              </ion-badge>
             </ion-button>
             <br />
             Accepted
@@ -70,6 +80,9 @@
           <ion-col size="3">
             <ion-button fill="clear" @click="onClickMyPurchase('torecieve')">
               <ion-icon color="medium" name="bus-outline" />
+              <ion-badge v-if="toRecieveOrders.length > 0" class="notification-order-badge">
+                {{toRecieveOrders.length}}
+              </ion-badge>
             </ion-button>
             <br />
             To Recieve
@@ -102,7 +115,8 @@
 
 <script>
   import {
-    computed
+    computed,
+    ref
   } from '@vue/reactivity'
   import {
     useRouter
@@ -112,23 +126,49 @@
   } from 'vuex'
   import {
     onMounted,
-    onUpdated
+    // onUpdated,
+    watch
   } from '@vue/runtime-core'
   export default {
     name: 'Me',
     components: {},
     setup() {
-      onMounted(() => {})
-
-      onUpdated(() => {
-        store.dispatch('user/loadUserData', userId.value)
+      onMounted(() => {
+        if (Object.keys(userData.value).length > 0) {
+          getOrderStatus()
+        }
       })
+
       const router = useRouter()
       const store = useStore()
+
+      let pendingOrders = ref([])
+      let acceptedOrders = ref([])
+      let toRecieveOrders = ref([])
 
       const userData = computed(() => store.state.user.userData)
       const isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
       const userId = computed(() => store.state.auth.userId)
+
+      // watch(userData, function () {
+      //   getOrderStatus()
+      // })
+      watch(userId, function () {
+        store.dispatch('user/loadUserData', userId.value).then(() => {
+          getOrderStatus()
+        })
+      })
+
+      function doRefresh(event) {
+        store.dispatch('user/loadUserData', userId.value).then(() => {
+          getOrderStatus()
+        }).finally(() => {
+            setTimeout(() => {
+              if (event)
+                event.target.complete()
+            }, 500)
+          })
+      }
 
       function onClickLogin() {
         router.push(`/login`)
@@ -141,12 +181,40 @@
       function onClickMyPurchase(segment) {
         router.push(`/my-purchases/${segment}`)
       }
+
+      function getOrderStatus(orders) {
+        pendingOrders.value = []
+        acceptedOrders.value = []
+        toRecieveOrders.value = []
+        orders = userData.value.orders
+        console.log(orders);
+        orders.forEach((value) => {
+          switch (value.order_status) {
+            case '0': {
+              pendingOrders.value.push(value)
+            }
+            break
+          case '1': {
+            acceptedOrders.value.push(value)
+          }
+          break
+          case '2': {
+            toRecieveOrders.value.push(value)
+          }
+          break
+          }
+        })
+      }
       return {
         onClickLogin,
         onClickSignUp,
         isUserLoggedIn,
         userData,
         onClickMyPurchase,
+        pendingOrders,
+        acceptedOrders,
+        toRecieveOrders,
+        doRefresh
       }
     }
   }

@@ -65,8 +65,13 @@
             }
 
             function loadAddresses() {
-                let uId = router.currentRoute.value.params.user_id
-                AddressesAPI.list(uId, 'O').then((response) => {
+                const params = {
+                    offset: 0,
+                    limit: 10,
+                    user_id: router.currentRoute.value.params.user_id,
+                    status: 'O',
+                }
+                AddressesAPI.list(params).then((response) => {
                     address.value = response.data
                 })
             }

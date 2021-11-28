@@ -10,8 +10,10 @@ export default {
     update(product) {
         return api.put('product', product)
     },
-    list() {
-        return api.get(`products`)
+    list(params) {
+        return api.get(`/customer/products`, {
+            params
+        })
     },
     archive(product) {
         return api.patch('product', product)
