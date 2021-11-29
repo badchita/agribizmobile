@@ -23,7 +23,8 @@
             <img style="object-fit: contain;" width="420" height="310" :src="getThumbnail(products.thumbnail_name)" />
             <ion-item-group>
                 <ion-item lines="none">
-                    <ion-badge :color="products.product_status === 'Available' ? 'primary' : 'danger'">{{products.product_status}}</ion-badge>
+                    <ion-badge :color="products.product_status === 'Available' ? 'primary' : 'danger'">
+                        {{products.product_status}}</ion-badge>
                     <ion-label class="ion-margin-start" style="font-size: 18px;">
                         {{products.name}}
                     </ion-label>
@@ -34,7 +35,8 @@
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
-                    <StarRating :rating="4" :show-rating="true" :read-only="true" :star-size="18" />
+                    <StarRating style="margin-left: 8px;" :rating="4" :show-rating="true" :read-only="true"
+                        :star-size="14" :padding="6" :rounded-corners="true" />
                     <ion-label class="ion-margin-start" color="medium" style="font-size: 14px;">Stocks:
                         {{products.quantity}}</ion-label>
                     <ion-button v-if="!likeButtonStatus" fill="clear" color="medium" @click="onClickLike()">
@@ -148,6 +150,55 @@
                     </ion-label>
                 </ion-item>
             </ion-list>
+
+            <ion-item v-if="product_ratings.length === 0" class="ion-margin-top" lines="none">
+                <ion-label>
+                    <h3>No ratings yet</h3>
+                </ion-label>
+            </ion-item>
+
+            <ion-list v-else class="ion-margin-top">
+                <ion-list-header>
+                    <strong>Product Ratings</strong>
+                    <ion-label style="color: #58a89d; text-align: right;" @click="onClickSeeAllRatings">See All
+                        <ion-icon name="chevron-forward" />
+                    </ion-label>
+                </ion-list-header>
+                <StarRating style="margin-left: 16px;" :rating="5" :show-rating="true" :read-only="true" :star-size="16"
+                    :padding="4" :rounded-corners="true" />
+                <div v-for="(item, i) in product_ratings" :key="i" class="ion-margin-top">
+                    <ion-item lines="none">
+                        <ion-avatar slot="start">
+                            <img src="https://pickaface.net/gallery/avatar/unr_test_180821_0925_9k0pgs.png">
+                        </ion-avatar>
+                        <ion-label>
+                            <h2 v-if="item.anonymous === 0" style="margin-bottom: 8px;">{{item.user.username}}
+                            </h2>
+                            <h2 v-else style="margin-bottom: 8px;">{{anonymousWord(item.user.username)}}
+                            </h2>
+                            <StarRating :rating="item.rating" :show-rating="false" :read-only="true" :star-size="14"
+                                :padding="4" :rounded-corners="true" />
+                        </ion-label>
+                        <ion-icon size="small" name="ellipsis-horizontal" />
+                    </ion-item>
+                    <ion-item lines="full">
+                        <ion-label style="margin-left: 54px;">
+                            <p class="ion-text-wrap">
+                                {{item.review}}
+                            </p>
+                            <p style="margin-top: 16px;">
+                                {{formatDate(item.created_at)}}
+                            </p>
+                        </ion-label>
+                    </ion-item>
+                </div>
+                <ion-item lines="none" class="ion-text-center" button @click="onClickSeeAllRatings">
+                    <ion-label style="color: #58a89d;">
+                        See All Reviews ({{reviewsLength}})
+                        <ion-icon name="chevron-forward" />
+                    </ion-label>
+                </ion-item>
+            </ion-list>
         </ion-content>
 
         <ion-footer class="ion-no-border">
@@ -159,7 +210,7 @@
                     Add to Cart
                 </ion-button>
                 <ion-button v-if="products.product_status === 'Available'" expand="full"
-                    style="--background: var(--ion-color-primary)"  :disabled="buttonDisabled" @click="onClickBuy">
+                    style="--background: var(--ion-color-primary)" :disabled="buttonDisabled" @click="onClickBuy">
                     <ion-label>Buy Now</ion-label>
                 </ion-button>
                 <ion-button v-else expand="full"
@@ -206,9 +257,11 @@
             let quantity = ref()
             let addresses_detail = ref({})
             let like_products = ref([])
+            let product_ratings = ref([])
             let likeButtonStatus = ref(false)
             let thumbnailPath = ref('')
             let buttonDisabled = ref(false)
+            let reviewsLength = ref(0)
 
             let isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
             let userId = computed(() => store.state.user.userData.id)
@@ -255,6 +308,11 @@
                     products.value = response.data.data
                     seller.value = response.data.data.seller
                     addresses_detail.value = response.data.data.addresses_detail
+
+                    product_ratings.value = response.data.data.product_ratings
+                    reviewsLength.value = response.data.data.product_ratings.length
+                    if (product_ratings.value.length > 3)
+                        product_ratings.value.splice(3)
                 }).catch((err) => {
                     console.error(err);
                 })
@@ -325,6 +383,11 @@
                 }
             }
 
+            function onClickSeeAllRatings() {
+                const product_id = products.value.id
+                router.push(`/product-ratings/${product_id}`)
+            }
+
             async function presentAlert() {
                 const alert = await alertController.create({
                     header: 'Must Be Logged In',
@@ -356,7 +419,10 @@
                 userId,
                 likeButtonStatus,
                 getThumbnail,
-                buttonDisabled
+                buttonDisabled,
+                product_ratings,
+                reviewsLength,
+                onClickSeeAllRatings
             }
         }
     }

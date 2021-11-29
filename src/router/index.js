@@ -72,6 +72,10 @@ const routes = [{
   {
     path: '/rate-product/:product_id/:order_id',
     component: () => import('@/views/Pages/RateProduct')
+  },
+  {
+    path: '/product-ratings/:product_id',
+    component: () => import('@/views/Pages/ProductRatings')
   }
 ]
 

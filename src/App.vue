@@ -59,6 +59,7 @@
     timerOutline,
     checkmarkCircleOutline,
     checkboxOutline,
+    ellipsisHorizontal,
   } from 'ionicons/icons';
 
   addIcons({
@@ -105,6 +106,7 @@
     'timer-outline': timerOutline,
     'checkmark-circle-outline': checkmarkCircleOutline,
     'checkbox-outline': checkboxOutline,
+    'ellipsis-horizontal': ellipsisHorizontal,
   });
 
   export default ({
