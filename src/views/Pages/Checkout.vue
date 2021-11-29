@@ -14,6 +14,7 @@
                     </ion-label>
                     <ion-icon color="medium" name="chevron-forward" @click="onClickToAddressSelection" />
                 </ion-item>
+                <!-- <div v-if="selected_address"> -->
                 <ion-item class="delivery-item" lines="none">
                     <ion-label>{{selected_address.name}} | {{selected_address.mobile}}</ion-label>
                 </ion-item>
@@ -26,6 +27,7 @@
                 <ion-item class="delivery-item" lines="none">
                     <ion-label>{{selected_address.province}}</ion-label>
                 </ion-item>
+                <!-- </div> -->
             </ion-item-group>
 
             <!-- product  details -->

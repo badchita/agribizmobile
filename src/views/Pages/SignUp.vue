@@ -121,7 +121,7 @@
                 password_confirmation: '',
                 mobile: '',
                 birthday: '',
-                user_type: 'Seller',
+                user_type: 'Customer',
                 type: 0
             })
 
