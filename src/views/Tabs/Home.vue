@@ -114,14 +114,15 @@
         </ion-row>
         <ion-row>
           <ion-col class="daily-discover-col">
-            <ion-card v-for="item in product" :key="item" :class="product.length % 2 === 0 ? 'even-card' : ''" button
-              @click="onClickProductCard(item.id)">
+            <ion-card v-for="item in product" :key="item" button @click="onClickProductCard(item.id)">
               <img v-if="item.thumbnail_name === null" :src="getThumbnail(item.thumbnail_name)" height="140" width="200"
                 style="object-fit: fill;" />
               <img v-else :src="getThumbnail(item.thumbnail_name)" height="140" width="200"
                 style="object-fit: contain;" />
               <ion-card-header>
-                <ion-card-title>{{item.name}}</ion-card-title>
+                <ion-card-title class="ion-text-nowrap">
+                  <ion-label>{{item.name}}</ion-label>
+                </ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-label>

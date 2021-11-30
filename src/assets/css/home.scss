@@ -25,24 +25,23 @@ ion-grid {
 
 .daily-discover-col {
     column-count: 2;
-    padding-bottom: 16px;
 
     ion-card {
         box-shadow: none;
-        border: 1px solid #F0F0F0;
+        border-top: 1px solid #F0F0F0;
+        border-left: 1px solid #F0F0F0;
+        border-right: 1px solid #F0F0F0;
         text-align: left;
-        display: flex;
-        flex-direction: column;
-        width: 100% !important;
-        margin: 0 !important;
-        margin-bottom: 16px !important;
+        margin-top: auto;
 
         ion-card-header {
             background: #F0F0F0;
 
             ion-card-title {
                 font-size: 14px;
-                word-wrap: break-word;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
         }
@@ -51,9 +50,5 @@ ion-grid {
             background: #F0F0F0;
             font-size: 14px;
         }
-    }
-
-    .even-card {
-        margin-top: auto;
     }
 }
