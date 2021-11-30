@@ -40,7 +40,7 @@
                 </ion-row>
                 <ion-row class="product-detail-row">
                     <ion-col size="3.5">
-                        <img width="100" src="@/assets/images/demo-top-product.jpg" />
+                        <img style="margin-left: 8px;" width="100" :src="getThumbnail(products_detail.thumbnail_name)" />
                     </ion-col>
                     <ion-col>
                         <ion-text>{{products_detail.name}}</ion-text> <br>
@@ -138,6 +138,7 @@
 <script>
     import ProductAPI from '@/api/product'
     import OrderAPI from '@/api/orders'
+    import ResourceURL from '@/api/resourceURL'
 
     import {
         computed,
@@ -162,6 +163,7 @@
             let products_detail = ref({})
             let addresses_detail = ref({})
             let seller = ref({})
+            let thumbnailPath = ref('')
 
             let userId = computed(() => store.state.user.userData.id)
             let selected_address = computed(() => store.state.user.userData.selected_address)
@@ -208,6 +210,14 @@
             function onClickToAddressSelection() {
                 router.push(`/address-selection/${userId.value}`)
             }
+
+            function getThumbnail(fileName) {
+                if (fileName) {
+                    return thumbnailPath.value = ResourceURL.api + fileName
+                } else {
+                    return thumbnailPath.value = 'https://www.fcprop.net/images/noimage.png'
+                }
+            }
             return {
                 products_detail,
                 seller,
@@ -217,7 +227,8 @@
                 totalPayment,
                 onClickPlaceOrder,
                 onClickToAddressSelection,
-                selected_address
+                selected_address,
+                getThumbnail
             }
         }
     }

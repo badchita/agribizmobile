@@ -18,6 +18,9 @@
         <ion-tab-button tab="notifications" href="/tabs/notifications">
           <ion-icon v-if="active.notifications" name="notifications-sharp" />
           <ion-icon v-else name="notifications-outline" />
+          <ion-badge v-if="newNotification.length > 0" class="notification-badge-tabs">
+            {{newNotification.length}}
+          </ion-badge>
           <ion-label>Notifications</ion-label>
         </ion-tab-button>
 
@@ -32,18 +35,44 @@
 </template>
 
 <script>
+  import NotificationVendorAPI from '@/api/notifications_vendor'
+
   import {
-    reactive
+    computed,
+    reactive,
+    ref
   } from '@vue/reactivity'
+  import {
+    onMounted,
+    watch
+  } from '@vue/runtime-core'
+  import {
+    useStore
+  } from 'vuex'
   export default {
     name: 'Tabs',
     components: {},
     setup() {
+      onMounted(() => {
+        if (userId.value)
+          loadNotificationVendor()
+      })
+      const store = useStore()
+
       const active = reactive({
         home: false,
         feed: false,
         notifications: false,
         me: false,
+      })
+
+      let newNotification = ref([])
+
+      // const userData = computed(() => store.state.user.userData)
+      const userId = computed(() => store.state.auth.userId)
+
+      watch(newNotification, function (val) {
+        newNotification = val
       })
 
       function onTabsChangeActive(ev) {
@@ -84,9 +113,29 @@
         }
       }
 
+      function loadNotificationVendor() {
+        const params = {
+          offset: 0,
+          limit: 10,
+          to_id: userId.value
+        }
+        NotificationVendorAPI.list(params).then((response) => {
+          // notifications_vendor.value = response.data.data
+          response.data.data.forEach((value) => {
+            switch (value.new) {
+              case 1: {
+                newNotification.value.push(value)
+              }
+              break
+            }
+          })
+        })
+      }
+
       return {
         onTabsChangeActive,
-        active
+        active,
+        newNotification
       }
     }
   }
@@ -94,5 +143,6 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global-variables.scss';
+  @import '@/assets/css/global.scss';
   @import '@/assets/css/tabs.scss';
 </style>

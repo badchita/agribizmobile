@@ -60,6 +60,7 @@
     checkmarkCircleOutline,
     checkboxOutline,
     ellipsisHorizontal,
+    ellipse,
   } from 'ionicons/icons';
 
   addIcons({
@@ -107,6 +108,7 @@
     'checkmark-circle-outline': checkmarkCircleOutline,
     'checkbox-outline': checkboxOutline,
     'ellipsis-horizontal': ellipsisHorizontal,
+    'ellipse': ellipse,
   });
 
   export default ({

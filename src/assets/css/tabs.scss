@@ -7,3 +7,12 @@ ion-icon {
     color: $na-green;
     font-size: 26px;
 }
+
+.notification-badge-tabs {
+    position: absolute;
+    top: 4px;
+    right: 20px;
+    font-size: 10px;
+    font-weight: lighter;
+    background: $na-green;
+}
