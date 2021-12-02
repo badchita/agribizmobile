@@ -43,7 +43,8 @@
   import {
     computed,
     onMounted,
-    ref
+    ref,
+    watch
   } from '@vue/runtime-core'
   import {
     useStore
@@ -65,6 +66,10 @@
       const userData = computed(() => store.state.user.userData)
 
       let notifications_vendor = ref([])
+
+      watch(userData, function () {
+        loadNotificationVendor()
+      })
 
       function doRefresh(event) {
         if (userData.value.id) {
