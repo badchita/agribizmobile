@@ -1,0 +1,6 @@
+{
+	"appId": "com.agribizmobile",
+	"appName": "agribizmobile",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

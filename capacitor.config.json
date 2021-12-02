@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "my-vue-app",
-	"webDir": "dist",
-	"bundledWebRuntime": false
+  "appId": "com.agribizmobile",
+  "appName": "agribizmobile",
+  "webDir": "dist",
+  "bundledWebRuntime": false
 }
