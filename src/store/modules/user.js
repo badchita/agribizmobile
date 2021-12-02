@@ -31,6 +31,7 @@ export default {
         removeUserData({
             commit
         }) {
+            console.log('remove');
             commit('SET_USER_DATA', {})
         }
     }

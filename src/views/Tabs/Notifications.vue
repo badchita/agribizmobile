@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header class="ion-no-border">
       <ion-toolbar>
         <ion-title class="header-title">
           Notifications
@@ -13,7 +13,7 @@
         <ion-refresher-content>
         </ion-refresher-content>
       </ion-refresher>
-      <ion-list>
+      <ion-list class="ion-margin-top">
         <ion-list-header>
           <ion-label>
             Order Updates
@@ -66,26 +66,20 @@
 
       let notifications_vendor = ref([])
 
-      function loadNotificationVendor() {
-        const params = {
-          offset: 0,
-          limit: 10,
-          to_id: userData.value.id
-        }
-        NotificationVendorAPI.list(params).then((response) => {
-          notifications_vendor.value = response.data.data
-        }).catch((err) => {
-          console.error(err);
-        })
-      }
-
       function doRefresh(event) {
-        loadNotificationVendor().finally(() => {
+        if (userData.value.id) {
+          loadNotificationVendor().finally(() => {
+            setTimeout(() => {
+              if (event)
+                event.target.complete()
+            }, 500)
+          })
+        } else {
           setTimeout(() => {
             if (event)
               event.target.complete()
           }, 500)
-        })
+        }
       }
 
       function onClickItem(item) {
@@ -98,12 +92,33 @@
             NotificationVendorAPI.markAsRead(params).then(() => {
               if (item.orders.order_status === '1')
                 router.push(`/my-purchases/accepted`)
+              if (item.orders.order_status === '2')
+                router.push(`/my-purchases/torecieve`)
+              if (item.orders.order_status === '3')
+                router.push(`/my-purchases/delivered`)
             })
           } else {
             if (item.orders.order_status === '1')
               router.push(`/my-purchases/accepted`)
+            if (item.orders.order_status === '2')
+              router.push(`/my-purchases/torecieve`)
+            if (item.orders.order_status === '3')
+              router.push(`/my-purchases/delivered`)
           }
         }
+      }
+
+      async function loadNotificationVendor() {
+        const params = {
+          offset: 0,
+          limit: 10,
+          to_id: userData.value.id
+        }
+        await NotificationVendorAPI.list(params).then((response) => {
+          notifications_vendor.value = response.data.data
+        }).catch((err) => {
+          console.error(err);
+        })
       }
 
       return {

@@ -101,7 +101,7 @@
       </ion-list>
 
       <ion-list>
-        <ion-item lines="none" button>
+        <ion-item v-if="isUserLoggedIn" lines="none" button @click="onClickMyAccountSettings">
           <ion-icon style="color: #483D8B;" name="person-outline" slot="start" />
           <ion-label>My Account Settings</ion-label>
           <ion-icon color="medium" name="chevron-forward-outline" slot="end" />
@@ -154,9 +154,13 @@
       const userId = computed(() => store.state.auth.userId)
 
       watch(userId, function () {
-        store.dispatch('user/loadUserData', userId.value).then(() => {
+        if (userId.value > 0) {
+          store.dispatch('user/loadUserData', userId.value).then(() => {
+            getOrderStatus()
+          })
+        } else {
           getOrderStatus()
-        })
+        }
       })
 
       function doRefresh(event) {
@@ -182,34 +186,39 @@
         router.push(`/my-purchases/${segment}`)
       }
 
+      function onClickMyAccountSettings() {
+        router.push(`/account-settings`)
+      }
+
       function getOrderStatus(orders) {
         pendingOrders.value = []
         acceptedOrders.value = []
         toRecieveOrders.value = []
         toRateOrders.value = []
         orders = userData.value.orders
-        console.log(orders);
-        orders.forEach((value) => {
-          switch (value.order_status) {
-            case '0': {
-              pendingOrders.value.push(value)
+        if (Object.keys(userData.value).length > 0) {
+          orders.forEach((value) => {
+            switch (value.order_status) {
+              case '0': {
+                pendingOrders.value.push(value)
+              }
+              break
+            case '1': {
+              acceptedOrders.value.push(value)
             }
             break
-          case '1': {
-            acceptedOrders.value.push(value)
-          }
-          break
-          case '2': {
-            toRecieveOrders.value.push(value)
-          }
-          break
-          case '4': {
-            if (value.rated === 0)
-              toRateOrders.value.push(value)
-          }
-          break
-          }
-        })
+            case '2': {
+              toRecieveOrders.value.push(value)
+            }
+            break
+            case '4': {
+              if (value.rated === 0)
+                toRateOrders.value.push(value)
+            }
+            break
+            }
+          })
+        }
       }
       return {
         onClickLogin,
@@ -221,7 +230,8 @@
         acceptedOrders,
         toRecieveOrders,
         toRateOrders,
-        doRefresh
+        doRefresh,
+        onClickMyAccountSettings
       }
     }
   }

@@ -14,7 +14,7 @@
         </ion-header>
 
         <ion-content>
-            <ion-item lines="full">
+            <ion-item class="ion-margin-top" lines="full">
                 <ion-thumbnail>
                     <img style="object-fit: contain;" :src="getThumbnail(products.thumbnail_name)" />
                 </ion-thumbnail>
