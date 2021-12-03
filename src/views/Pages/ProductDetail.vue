@@ -73,7 +73,7 @@
                 </ion-item>
                 <ion-item class="ion-margin-top" lines="none">
                     <ion-label style="font-size: 14px;" mode="ios">Quantity</ion-label>
-                    <ion-input type="number" v-model="quantity" />
+                    <ion-input type="number" min="0" v-model="quantity" />
                 </ion-item>
             </ion-item-group>
 
@@ -254,7 +254,7 @@
             let products = ref({})
             let seller = ref({})
             let seeMore = ref(false)
-            let quantity = ref()
+            let quantity = ref(0)
             let addresses_detail = ref({})
             let like_products = ref([])
             let product_ratings = ref([])

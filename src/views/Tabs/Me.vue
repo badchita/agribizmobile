@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header class="ion-no-border">
       <ion-toolbar>
-        <ion-buttons slot="end">
+        <!-- <ion-buttons slot="end">
           <ion-button>
             <ion-icon class="cart-chat-icon" style="color: white;" name="cart-outline" />
             <ion-badge class="notification-badge" style="background: white; color: #58a89d;">
@@ -15,7 +15,7 @@
               1
             </ion-badge>
           </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
       </ion-toolbar>
       <ion-toolbar no-border-top>
         <ion-avatar slot="start">
@@ -23,15 +23,17 @@
           <!-- <ion-img src="https://pickaface.net/gallery/avatar/unr_test_180821_0925_9k0pgs.png"/> -->
         </ion-avatar>
         <ion-row v-if="isUserLoggedIn" class="user-detail-row">
-          <ion-col size="7">
-            <ion-label class="user-name-label"><strong>{{userData.username}}</strong></ion-label>
+          <ion-col size="12">
+            <ion-label class="user-name-label"><strong>{{userData.username}}</strong></ion-label><br>
+            <ion-chip>{{userData.user_type}}</ion-chip><br>
+            <ion-label>Following <strong>0</strong></ion-label>
           </ion-col>
-          <ion-col size="7">
+          <!-- <ion-col size="7">
             <ion-chip>{{userData.user_type}}</ion-chip>
           </ion-col>
           <ion-col size="7">
             <ion-label>Following <strong>0</strong></ion-label>
-          </ion-col>
+          </ion-col> -->
         </ion-row>
         <ion-buttons v-if="!isUserLoggedIn" slot="end">
           <ion-button class="login-button" @click="onClickLogin">

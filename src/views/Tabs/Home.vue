@@ -3,7 +3,7 @@
     <ion-header class="ion-no-border">
       <ion-toolbar>
         <ion-searchbar type="text" slot="start" />
-        <ion-buttons slot="end">
+        <!-- <ion-buttons slot="end">
           <ion-button>
             <ion-icon class="cart-chat-icon" name="cart-outline" />
             <ion-badge class="notification-badge">
@@ -16,7 +16,7 @@
               1
             </ion-badge>
           </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
       </ion-toolbar>
     </ion-header>
 

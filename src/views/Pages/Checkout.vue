@@ -12,22 +12,23 @@
                     <ion-label class="delivery-address-header-label">
                         Delivery Adddress
                     </ion-label>
-                    <ion-icon color="medium" name="chevron-forward" @click="onClickToAddressSelection" />
+                    <ion-icon color="medium" :name="selected_address === null ? 'add' : 'chevron-forward'" @click="onClickToAddressSelection" />
                 </ion-item>
-                <!-- <div v-if="selected_address"> -->
-                <ion-item class="delivery-item" lines="none">
-                    <ion-label>{{selected_address.name}} | {{selected_address.mobile}}</ion-label>
-                </ion-item>
-                <ion-item class="delivery-item" lines="none">
-                    <ion-label>{{selected_address.street_building}}</ion-label>
-                </ion-item>
-                <ion-item class="delivery-item" lines="none">
-                    <ion-label>{{selected_address.barangay}}, {{selected_address.city}}</ion-label>
-                </ion-item>
-                <ion-item class="delivery-item" lines="none">
-                    <ion-label>{{selected_address.province}}</ion-label>
-                </ion-item>
-                <!-- </div> -->
+
+                <div v-if="selected_address !== null">
+                    <ion-item class="delivery-item" lines="none">
+                        <ion-label>{{selected_address.name}} | {{selected_address.mobile}}</ion-label>
+                    </ion-item>
+                    <ion-item class="delivery-item" lines="none">
+                        <ion-label>{{selected_address.street_building}}</ion-label>
+                    </ion-item>
+                    <ion-item class="delivery-item" lines="none">
+                        <ion-label>{{selected_address.barangay}}, {{selected_address.city}}</ion-label>
+                    </ion-item>
+                    <ion-item class="delivery-item" lines="none">
+                        <ion-label>{{selected_address.province}}</ion-label>
+                    </ion-item>
+                </div>
             </ion-item-group>
 
             <!-- product  details -->
@@ -40,7 +41,8 @@
                 </ion-row>
                 <ion-row class="product-detail-row">
                     <ion-col size="3.5">
-                        <img style="margin-left: 8px;" width="100" :src="getThumbnail(products_detail.thumbnail_name)" />
+                        <img style="margin-left: 8px;" width="100"
+                            :src="getThumbnail(products_detail.thumbnail_name)" />
                     </ion-col>
                     <ion-col>
                         <ion-text>{{products_detail.name}}</ion-text> <br>

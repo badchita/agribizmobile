@@ -9,11 +9,11 @@
           <ion-label>Home</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="feed" href="/tabs/feed">
+        <!-- <ion-tab-button tab="feed" href="/tabs/feed">
           <ion-icon v-if="active.feed" name="grid-sharp" />
           <ion-icon v-else name="grid-outline" />
           <ion-label>Feed</ion-label>
-        </ion-tab-button>
+        </ion-tab-button> -->
 
         <ion-tab-button tab="notifications" href="/tabs/notifications">
           <ion-icon v-if="active.notifications" name="notifications-sharp" />

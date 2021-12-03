@@ -10,7 +10,8 @@
                     @click="onClickSelectAddress(item)">
                     <ion-label class="detail-label">
                         <label class="name-label ion-margin-end">{{item.name}}</label>
-                        <ion-icon v-if="userData.address_id === item.id" size="small" style="color: #58a89d;" name="checkmark" /> <br>
+                        <ion-icon v-if="userData.address_id === item.id" size="small" style="color: #58a89d;"
+                            name="checkmark" /> <br>
                         <label>{{item.mobile}}</label> <br>
                         <label>{{item.street_building}}</label> <br>
                         <label>{{item.barangay}}, {{item.city}}</label> <br>
@@ -38,7 +39,8 @@
     import {
         computed,
         onMounted,
-        ref
+        ref,
+        watch
     } from '@vue/runtime-core'
     import {
         useStore
@@ -55,6 +57,9 @@
             let address = ref({})
 
             let userData = computed(() => store.state.user.userData)
+            watch(userData, function () {
+                loadAddresses()
+            })
 
             function onClickNewAddress() {
                 router.push(`/new-address`)
