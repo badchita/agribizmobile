@@ -61,11 +61,12 @@ ion-footer {
     .chat-add-to-cart-buttons {
         width: 25%;
         margin-right: -4px;
+        overflow: visible;
         --background: #58a89d;
     }
 
     ion-button {
-        width: 50%;
+        width: 100%;
         text-transform: none;
         padding: 0;
         color: white;

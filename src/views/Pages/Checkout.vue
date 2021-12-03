@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ion-header>
+        <ion-header class="ion-no-border">
             <Header title="Checkout" />
         </ion-header>
 

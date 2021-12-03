@@ -61,6 +61,7 @@
     checkboxOutline,
     ellipsisHorizontal,
     ellipse,
+    cart,
   } from 'ionicons/icons';
 
   addIcons({
@@ -109,6 +110,7 @@
     'checkbox-outline': checkboxOutline,
     'ellipsis-horizontal': ellipsisHorizontal,
     'ellipse': ellipse,
+    'cart': cart,
   });
 
   export default ({

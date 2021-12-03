@@ -24,8 +24,8 @@ const routes = [{
         component: () => import('@/views/Tabs/Home')
       },
       {
-        path: 'feed',
-        component: () => import('@/views/Tabs/Feed')
+        path: 'cart',
+        component: () => import('@/views/Tabs/Cart')
       },
       {
         path: 'notifications',

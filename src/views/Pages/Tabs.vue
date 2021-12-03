@@ -9,11 +9,11 @@
           <ion-label>Home</ion-label>
         </ion-tab-button>
 
-        <!-- <ion-tab-button tab="feed" href="/tabs/feed">
-          <ion-icon v-if="active.feed" name="grid-sharp" />
-          <ion-icon v-else name="grid-outline" />
-          <ion-label>Feed</ion-label>
-        </ion-tab-button> -->
+        <ion-tab-button tab="cart" href="/tabs/cart">
+          <ion-icon v-if="active.cart" name="cart" />
+          <ion-icon v-else name="cart-outline" />
+          <ion-label>Cart</ion-label>
+        </ion-tab-button>
 
         <ion-tab-button tab="notifications" href="/tabs/notifications">
           <ion-icon v-if="active.notifications" name="notifications-sharp" />
@@ -61,7 +61,7 @@
 
       const active = reactive({
         home: false,
-        feed: false,
+        cart: false,
         notifications: false,
         me: false,
       })
@@ -79,28 +79,28 @@
         switch (ev.tab) {
           case 'home': {
             active.home = true
-            active.feed = false
+            active.cart = false
             active.notifications = false
             active.me = false
           }
           break
-        case 'feed': {
+        case 'cart': {
           active.home = false
-          active.feed = true
+          active.cart = true
           active.notifications = false
           active.me = false
         }
         break
         case 'notifications': {
           active.home = false
-          active.feed = false
+          active.cart = false
           active.notifications = true
           active.me = false
         }
         break
         case 'me': {
           active.home = false
-          active.feed = false
+          active.cart = false
           active.notifications = false
           active.me = true
         }

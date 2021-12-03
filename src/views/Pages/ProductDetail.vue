@@ -35,17 +35,10 @@
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
-                    <StarRating style="margin-left: 8px;" :rating="4" :show-rating="true" :read-only="true"
+                    <StarRating style="" :rating="4" :show-rating="true" :read-only="true"
                         :star-size="14" :padding="6" :rounded-corners="true" />
                     <ion-label class="ion-margin-start" color="medium" style="font-size: 14px;">Stocks:
                         {{products.quantity}}</ion-label>
-                    <ion-button v-if="!likeButtonStatus" fill="clear" color="medium" @click="onClickLike()">
-                        <ion-icon slot="icon-only" name="heart-outline" />
-                    </ion-button>
-                    <ion-button v-if="likeButtonStatus" fill="clear" color="medium" @click="onClickLike()">
-                        <ion-icon slot="icon-only" color="danger" name="heart" />
-                    </ion-button>
-                    <p>{{like_products.length}}</p>
                 </ion-item>
                 <ion-item class="ion-margin-top" lines="none">
                     <ion-row class="shipping-row">
@@ -202,11 +195,11 @@
         </ion-content>
 
         <ion-footer class="ion-no-border">
-            <ion-buttons>
-                <ion-button expand="full" full class="chat-add-to-cart-buttons">
+            <ion-buttons class="ion-justify-content-center">
+                <ion-button v-if="isUserLoggedIn" expand="full" full class="chat-add-to-cart-buttons">
                     Chat
                 </ion-button>
-                <ion-button expand="full" class="chat-add-to-cart-buttons">
+                <ion-button v-if="isUserLoggedIn" expand="full" class="chat-add-to-cart-buttons" :disabled="addToCartButton ? false : true" @click="onClickAddToCart">
                     Add to Cart
                 </ion-button>
                 <ion-button v-if="products.product_status === 'Available'" expand="full"
@@ -224,7 +217,7 @@
 
 <script>
     import ProductAPI from '@/api/product'
-    import LikeProductsAPI from '@/api/like_products'
+    import CartAPI from '@/api/carts'
     import ResourceURL from '@/api/resourceURL'
 
     import {
@@ -246,7 +239,6 @@
         setup() {
             onMounted(() => {
                 loadProductDetail()
-                loadLikeProducts()
             })
             const router = useRouter()
             const store = useStore()
@@ -262,6 +254,7 @@
             let thumbnailPath = ref('')
             let buttonDisabled = ref(false)
             let reviewsLength = ref(0)
+            let addToCartButton = ref(true)
 
             let isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
             let userId = computed(() => store.state.user.userData.id)
@@ -302,77 +295,9 @@
                 }
             }
 
-            function loadProductDetail() {
-                const id = router.currentRoute.value.params.id
-                ProductAPI.get(id).then((response) => {
-                    products.value = response.data.data
-                    seller.value = response.data.data.seller
-                    addresses_detail.value = response.data.data.addresses_detail
-
-                    product_ratings.value = response.data.data.product_ratings
-                    reviewsLength.value = response.data.data.product_ratings.length
-                    if (product_ratings.value.length > 3)
-                        product_ratings.value.splice(3)
-                }).catch((err) => {
-                    console.error(err);
-                })
-            }
-
-            function loadLikeProducts() {
-                const productId = router.currentRoute.value.params.id
-
-                LikeProductsAPI.list(userId.value, +productId).then((response) => {
-                    like_products.value = response.data
-                    like_products.value.forEach((value) => {
-                        if (value.user_id === userId.value && value.product_id === +productId && value
-                            .status === 'V') {
-                            likeButtonStatus.value = false
-                        } else if (value.user_id === userId.value && value.product_id === +productId &&
-                            value.status === 'O') {
-                            likeButtonStatus.value = true
-                        }
-                    })
-                })
-            }
-
-            function onClickLike() {
-                const productId = router.currentRoute.value.params.id
-
-                // const payload = {
-                //     product_id: productId,
-                //     user_id: userId.value,
-                //     status: 'O'
-                // }
-
-                like_products.value.forEach((value) => {
-                    if (value.product_id === +productId && value.user_id === userId.value && value.status ===
-                        'O') {
-                        value.status = 'V'
-                        LikeProductsAPI.archive(value).then(() => {
-                            loadLikeProducts()
-                        })
-                    } else if (value.product_id === +productId && value.user_id === userId.value && value
-                        .status === 'V') {
-                        value.status = 'O'
-                        LikeProductsAPI.archive(value).then(() => {
-                            loadLikeProducts()
-                        })
-                    }
-                    // else {
-                    //     LikeProductsAPI.add(payload).then(() => {
-                    //         loadLikeProducts()
-                    //     })
-                    // }
-                })
-                // const payload = {
-                //     product_id: productId,
-                //     user_id: userId.value,
-                //     status: 'O'
-                // }
-                // console.log(payload);
-                // LikeProductsAPI.add(payload).then(() => {
-                //     loadLikeProducts()
-                // })
+            function onClickSeeAllRatings() {
+                const product_id = products.value.id
+                router.push(`/product-ratings/${product_id}`)
             }
 
             function getThumbnail(fileName) {
@@ -383,11 +308,39 @@
                 }
             }
 
-            function onClickSeeAllRatings() {
-                const product_id = products.value.id
-                router.push(`/product-ratings/${product_id}`)
+            async function onClickAddToCart() {
+                const params = {
+                    user_id: userId.value,
+                    product_id: products.value.id
+                }
+                await CartAPI.add(params).then(() => {
+                    store.dispatch('toast/presentToast', {
+                        m: '<strong>Product Added To Cart</strong> Stocks',
+                        type: 'success'
+                    })
+                    addToCartButton.value = false
+                })
             }
+            async function loadProductDetail() {
+                const id = router.currentRoute.value.params.id
+                await ProductAPI.get(id).then((response) => {
+                    products.value = response.data.data
+                    seller.value = response.data.data.seller
+                    addresses_detail.value = response.data.data.addresses_detail
 
+                    product_ratings.value = response.data.data.product_ratings
+                    reviewsLength.value = response.data.data.product_ratings.length
+                    if (product_ratings.value.length > 3)
+                        product_ratings.value.splice(3)
+                    
+                    response.data.data.carts.forEach((value) => {
+                        if (value.product_id === products.value.id)
+                            addToCartButton.value = false
+                    })
+                }).catch((err) => {
+                    console.error(err);
+                })
+            }
             async function presentAlert() {
                 const alert = await alertController.create({
                     header: 'Must Be Logged In',
@@ -414,7 +367,6 @@
                 quantity,
                 addresses_detail,
                 isUserLoggedIn,
-                onClickLike,
                 like_products,
                 userId,
                 likeButtonStatus,
@@ -422,7 +374,9 @@
                 buttonDisabled,
                 product_ratings,
                 reviewsLength,
-                onClickSeeAllRatings
+                onClickSeeAllRatings,
+                addToCartButton,
+                onClickAddToCart
             }
         }
     }
