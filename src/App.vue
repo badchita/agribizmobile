@@ -62,6 +62,10 @@
     ellipsisHorizontal,
     ellipse,
     cart,
+    chatbubblesOutline,
+    chatbubbles,
+    createOutline,
+    sendSharp,
   } from 'ionicons/icons';
 
   addIcons({
@@ -111,6 +115,10 @@
     'ellipsis-horizontal': ellipsisHorizontal,
     'ellipse': ellipse,
     'cart': cart,
+    'chatbubbles-outline': chatbubblesOutline,
+    'chatbubbles': chatbubbles,
+    'create-outline': createOutline,
+    'send-sharp': sendSharp,
   });
 
   export default ({

@@ -28,6 +28,10 @@ const routes = [{
         component: () => import('@/views/Tabs/Cart')
       },
       {
+        path: 'chat',
+        component: () => import('@/views/Tabs/Chat')
+      },
+      {
         path: 'notifications',
         component: () => import('@/views/Tabs/Notifications')
       },
@@ -80,6 +84,10 @@ const routes = [{
   {
     path: '/account-settings',
     component: () => import('@/views/Pages/AccountSetting')
+  },
+  {
+    path: '/conversation/:id',
+    component: () => import('@/views/Pages/Conversation')
   }
 ]
 

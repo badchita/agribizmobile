@@ -15,6 +15,12 @@
           <ion-label>Cart</ion-label>
         </ion-tab-button>
 
+        <ion-tab-button tab="chat" href="/tabs/chat">
+          <ion-icon v-if="active.chat" name="chatbubbles" />
+          <ion-icon v-else name="chatbubbles-outline" />
+          <ion-label>Chats</ion-label>
+        </ion-tab-button>
+
         <ion-tab-button tab="notifications" href="/tabs/notifications">
           <ion-icon v-if="active.notifications" name="notifications-sharp" />
           <ion-icon v-else name="notifications-outline" />
@@ -80,6 +86,7 @@
           case 'home': {
             active.home = true
             active.cart = false
+            active.chat = false
             active.notifications = false
             active.me = false
           }
@@ -87,6 +94,15 @@
         case 'cart': {
           active.home = false
           active.cart = true
+          active.chat = false
+          active.notifications = false
+          active.me = false
+        }
+        break
+        case 'chat': {
+          active.home = false
+          active.cart = false
+          active.chat = true
           active.notifications = false
           active.me = false
         }
@@ -94,6 +110,7 @@
         case 'notifications': {
           active.home = false
           active.cart = false
+          active.chat = false
           active.notifications = true
           active.me = false
         }
@@ -101,6 +118,7 @@
         case 'me': {
           active.home = false
           active.cart = false
+          active.chat = false
           active.notifications = false
           active.me = true
         }

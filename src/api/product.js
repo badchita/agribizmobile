@@ -21,7 +21,7 @@ export default {
     delete(id) {
         return api.delete('product', id)
     },
-    search(name) {
-        return api.get('product/search/' + name)
+    searchCustomerall(name) {
+        return api.get('product/searchcustomerall/' + name)
     }
 }
