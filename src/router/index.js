@@ -88,6 +88,10 @@ const routes = [{
   {
     path: '/conversation/:id',
     component: () => import('@/views/Pages/Conversation')
+  },
+  {
+    path: '/update-profile',
+    component: () => import('@/views/Pages/UpdateProfile')
   }
 ]
 

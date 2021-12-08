@@ -1,11 +1,11 @@
 <template>
-    <ion-grid v-for="item in acceptedOrders" :key="item" class="ion-margin-top">
+    <ion-grid v-for="item in cancelledOrders" :key="item" class="ion-margin-top">
         <ion-row>
             <ion-col>
                 <ion-label>{{item.seller_details.username}}</ion-label>
             </ion-col>
             <ion-col size="2.5">
-                <ion-label style="color: #7044ff;">Accepted</ion-label>
+                <ion-label color="danger">Canceled</ion-label>
             </ion-col>
         </ion-row>
         <ion-row>
@@ -31,17 +31,10 @@
         </ion-row>
         <ion-row style="font-size: 12px; color: #58a89d;">
             <ion-col size="1">
-                <ion-icon size="small" name="checkmark-circle-outline" />
+                <ion-icon size="small" name="close-circle-outline" />
             </ion-col>
             <ion-col >
-                <ion-label>Seller is Processing your Shipment</ion-label>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="12">
-                <ion-button expand="full" @click="onClickUpdateStatus(item)">
-                    Cancel
-                </ion-button>
+                <ion-label>Order Cancelled</ion-label>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -55,7 +48,7 @@
     } from '@vue/reactivity'
     export default {
         props: {
-            acceptedOrders: {
+            cancelledOrders: {
                 type: Object,
                 default: function () {}
             },

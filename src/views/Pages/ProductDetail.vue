@@ -5,12 +5,12 @@
                 <ion-buttons slot="start">
                     <ion-back-button style="color: #58a89d;" @click="onClickGoBack"></ion-back-button>
                 </ion-buttons>
-                <ion-searchbar type="text" />
-                <ion-buttons slot="end">
+                <!-- <ion-searchbar type="text" /> -->
+                <!-- <ion-buttons slot="end">
                     <ion-button style="color: #58a89d;">
                         <ion-icon class="cart-chat-icon" name="cart-outline" />
                     </ion-button>
-                </ion-buttons>
+                </ion-buttons> -->
             </ion-toolbar>
         </ion-header>
 
@@ -35,8 +35,8 @@
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
-                    <StarRating style="" :rating="4" :show-rating="true" :read-only="true"
-                        :star-size="14" :padding="6" :rounded-corners="true" />
+                    <StarRating style="" :rating="4" :show-rating="true" :read-only="true" :star-size="14" :padding="6"
+                        :rounded-corners="true" />
                     <ion-label class="ion-margin-start" color="medium" style="font-size: 14px;">Stocks:
                         {{products.quantity}}</ion-label>
                 </ion-item>
@@ -74,7 +74,7 @@
                 <ion-row>
                     <ion-col size="2">
                         <ion-avatar>
-                            <ion-icon name="person-sharp" />
+                            <img :src="getThumbnail(seller.profile_picture)">
                         </ion-avatar>
                     </ion-col>
                     <ion-col size="6">
@@ -82,9 +82,9 @@
                             <ion-label>{{seller.username}}</ion-label>
                         </div>
                     </ion-col>
-                    <ion-col size="3.5">
+                    <!-- <ion-col size="3.5">
                         <ion-button fill="clear" expand="full">View Shop</ion-button>
-                    </ion-col>
+                    </ion-col> -->
                 </ion-row>
                 <ion-row class="shop-stats-row">
                     <ion-col>
@@ -124,7 +124,8 @@
                 <ion-item lines="none">
                     <ion-label color="medium">Stock</ion-label>
                     <ion-label class="ion-margin-end">
-                        <ion-badge>{{products.product_status}}</ion-badge>
+                        <ion-badge :color="products.product_status === 'Available' ? 'primary' : 'danger'">
+                        {{products.product_status}}</ion-badge>
                     </ion-label>
                 </ion-item>
                 <ion-item lines="none">
@@ -199,7 +200,8 @@
                 <ion-button v-if="isUserLoggedIn" expand="full" full class="chat-add-to-cart-buttons">
                     Chat
                 </ion-button>
-                <ion-button v-if="isUserLoggedIn" expand="full" class="chat-add-to-cart-buttons" :disabled="addToCartButton ? false : true" @click="onClickAddToCart">
+                <ion-button v-if="isUserLoggedIn" expand="full" class="chat-add-to-cart-buttons"
+                    :disabled="addToCartButton ? false : true" @click="onClickAddToCart">
                     Add to Cart
                 </ion-button>
                 <ion-button v-if="products.product_status === 'Available'" expand="full"
@@ -258,6 +260,7 @@
 
             let isUserLoggedIn = computed(() => store.state.auth.isUserLoggedIn)
             let userId = computed(() => store.state.user.userData.id)
+            let userData = computed(() => store.state.user.userData)
 
             watch(quantity, function (v) {
                 if (v > products.value.quantity) {
@@ -332,8 +335,8 @@
                     reviewsLength.value = response.data.data.product_ratings.length
                     if (product_ratings.value.length > 3)
                         product_ratings.value.splice(3)
-                    
-                    response.data.data.carts.forEach((value) => {
+
+                    userData.value.carts.forEach((value) => {
                         if (value.product_id === products.value.id)
                             addToCartButton.value = false
                     })
@@ -376,7 +379,8 @@
                 reviewsLength,
                 onClickSeeAllRatings,
                 addToCartButton,
-                onClickAddToCart
+                onClickAddToCart,
+                thumbnailPath
             }
         }
     }

@@ -19,13 +19,13 @@
                     </ion-label>
                 </ion-list-header>
 
-                <ion-item lines="full">
+                <ion-item lines="full" button @click="onClickMyProfileItem">
                     <ion-label>
                         <h2>My Profile</h2>
                     </ion-label>
                     <ion-icon color="medium" size="small" name="chevron-forward-outline" slot="end" />
                 </ion-item>
-                <ion-item lines="full">
+                <ion-item lines="full" button @click="onClickToAddressSelection">
                     <ion-label>
                         <h2>My Addresses</h2>
                     </ion-label>
@@ -69,12 +69,23 @@
             const router = useRouter()
             const store = useStore()
 
-            let loginResponse = computed(() => store.state.auth.response)
             let openLoading = ref(false)
 
+            const userData = computed(() => store.state.user.userData)
+            let loginResponse = computed(() => store.state.auth.response)
+
             function onClickGoBack() {
-                router.go(`/tabs/me`)
+                router.push(`/tabs/me`)
             }
+
+            function onClickMyProfileItem() {
+                router.push(`/update-profile`)
+            }
+
+            function onClickToAddressSelection() {
+                router.push(`/address-selection/${userData.value.id}`)
+            }
+
             async function onClickSignOut() {
                 openLoading.value = true
                 console.log(loginResponse.value);
@@ -88,9 +99,6 @@
                         })
                     }, 1000)
                     router.push(`/tabs/me`)
-                    // setTimeout(() => {
-                    //     router.go()
-                    // }, 500)
                 }).finally(() => {
                     openLoading.value = false
                 })
@@ -99,7 +107,9 @@
             return {
                 onClickGoBack,
                 onClickSignOut,
-                openLoading
+                openLoading,
+                onClickMyProfileItem,
+                onClickToAddressSelection
             }
         }
     }

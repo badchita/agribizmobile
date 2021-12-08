@@ -66,6 +66,7 @@
     chatbubbles,
     createOutline,
     sendSharp,
+    closeCircleOutline,
   } from 'ionicons/icons';
 
   addIcons({
@@ -119,6 +120,7 @@
     'chatbubbles': chatbubbles,
     'create-outline': createOutline,
     'send-sharp': sendSharp,
+    'close-circle-outline': closeCircleOutline,
   });
 
   export default ({

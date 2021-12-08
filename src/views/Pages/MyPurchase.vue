@@ -12,11 +12,16 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
+            <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
+                <ion-refresher-content>
+                </ion-refresher-content>
+            </ion-refresher>
             <PendingOrders v-if="activeSegment === 'pending'" :pendingOrders="pendingOrders" />
             <AcceptedOrders v-if="activeSegment === 'accepted'" :acceptedOrders="acceptedOrders" />
             <ToRecieveOrders v-if="activeSegment === 'torecieve'" :toRecieveOrders="toRecieveOrders" />
             <DeliveredOrders v-if="activeSegment === 'delivered'" :deliveredOrders="deliveredOrders" />
             <CompletedOrders v-if="activeSegment === 'completed'" :completedOrders="completedOrders" />
+            <CancelledOrders v-if="activeSegment === 'cancelled'" :cancelledOrders="cancelledOrders" />
         </ion-content>
     </ion-page>
 </template>
@@ -29,6 +34,7 @@
     import ToRecieveOrders from '@/components/MyPurchase/ToRecieveOrders'
     import DeliveredOrders from '@/components/MyPurchase/DeliveredOrders'
     import CompletedOrders from '@/components/MyPurchase/CompletedOrders'
+    import CancelledOrders from '@/components/MyPurchase/CancelledOrders'
 
     import {
         computed,
@@ -49,7 +55,8 @@
             AcceptedOrders,
             ToRecieveOrders,
             DeliveredOrders,
-            CompletedOrders
+            CompletedOrders,
+            CancelledOrders
         },
         setup() {
             onMounted(() => {
@@ -83,10 +90,6 @@
                     value: 'cancelled',
                     text: 'Cancelled'
                 },
-                {
-                    value: 'returnrefund',
-                    text: 'Return Refund'
-                }
             ]
 
             let activeSegment = ref(router.currentRoute.value.params.segment)
@@ -96,13 +99,14 @@
             let toRecieveOrders = ref([])
             let deliveredOrders = ref([])
             let completedOrders = ref([])
+            let cancelledOrders = ref([])
 
-            let delivered = ref(null)
+            // let delivered = ref(null)
 
             let userData = computed(() => store.state.user.userData)
 
             function test() {
-                console.log(delivered.value);
+                console.log('test');
             }
 
             function onIonChangeSegment(ev) {
@@ -117,6 +121,7 @@
             }
 
             function loadOrders(id) {
+                console.log(id);
                 const params = {
                     user_id: id
                 }
@@ -126,7 +131,28 @@
                 })
             }
 
+            function doRefresh(event) {
+                if (userData.value.id) {
+                    loadOrders(userData.value.id)
+                    setTimeout(() => {
+                        if (event)
+                            event.target.complete()
+                    }, 500)
+                } else {
+                    setTimeout(() => {
+                        if (event)
+                            event.target.complete()
+                    }, 500)
+                }
+            }
+
             function getOrderStatus(o) {
+                pendingOrders.value = []
+                acceptedOrders.value = []
+                toRecieveOrders.value = []
+                deliveredOrders.value = []
+                completedOrders.value = []
+                cancelledOrders.value = []
                 o.forEach((value) => {
                     switch (value.order_status) {
                         case '0':
@@ -144,6 +170,9 @@
                         case '4':
                             completedOrders.value.push(value)
                             break
+                        case '-1':
+                            cancelledOrders.value.push(value)
+                            break
                     }
                 })
             }
@@ -157,7 +186,9 @@
                 toRecieveOrders,
                 deliveredOrders,
                 completedOrders,
-                test
+                test,
+                doRefresh,
+                cancelledOrders
             }
         }
     }

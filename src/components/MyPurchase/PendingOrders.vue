@@ -33,8 +33,15 @@
             <ion-col size="1">
                 <ion-icon size="small" name="timer-outline" />
             </ion-col>
-            <ion-col >
+            <ion-col>
                 <ion-label>Waiting to be Accepted by the Seller</ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12">
+                <ion-button color="danger" expand="full" @click="onClickCancel(item)">
+                    Cancel
+                </ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -42,10 +49,14 @@
 
 <script>
     import ResourceURL from '@/api/resourceURL'
+    import OrderAPI from '@/api/orders'
 
     import {
         ref
     } from '@vue/reactivity'
+    import {
+        alertController
+    } from '@ionic/core'
     export default {
         props: {
             pendingOrders: {
@@ -63,8 +74,31 @@
                     return thumbnailPath.value = 'https://www.fcprop.net/images/noimage.png'
                 }
             }
+
+            async function updateStatus(item) {
+                item.order_status = '-1'
+                await OrderAPI.updateStatus(item).then(() => {})
+            }
+            async function onClickCancel(item) {
+                const alert = await alertController.create({
+                    header: 'Cancel Order',
+                    message: '<strong>Are you sure you want to Cancel this Order?</strong>',
+                    buttons: [{
+                        text: 'Yes',
+                        handler: () => {
+                            updateStatus(item)
+                        }
+                    }, {
+                        text: 'No',
+                        role: 'cancel'
+                    }]
+                })
+
+                return alert.present();
+            }
             return {
-                getThumbnail
+                getThumbnail,
+                onClickCancel,
             }
         }
     }

@@ -28,7 +28,7 @@
 
       <div v-if="searchProducts === ''">
         <!-- top products -->
-        <ion-grid>
+        <!-- <ion-grid>
           <ion-row>
             <ion-col size="9.5">
               <ion-label style="color: #58a89d;">TOP PRODUCTS</ion-label>
@@ -61,10 +61,10 @@
               </ion-slide>
             </ion-slides>
           </ion-row>
-        </ion-grid>
+        </ion-grid> -->
 
         <!-- featured products -->
-        <ion-grid>
+        <!-- <ion-grid>
           <ion-row>
             <ion-col size="9.5">
               <ion-label style="color: #58a89d;">FEATURED PRODUCTS</ion-label>
@@ -100,7 +100,7 @@
               </ion-slide>
             </ion-slides>
           </ion-row>
-        </ion-grid>
+        </ion-grid> -->
 
         <!-- daily discover -->
         <ion-grid>
@@ -108,10 +108,10 @@
             <ion-col size="9.5">
               <ion-label style="color: #58a89d;">DAILY DISCOVER</ion-label>
             </ion-col>
-            <ion-col class="header-see-more-label">
+            <!-- <ion-col class="header-see-more-label">
               <ion-label color="medium">See More</ion-label>
               <ion-icon color="medium" name='chevron-forward' />
-            </ion-col>
+            </ion-col> -->
           </ion-row>
           <ion-row>
             <ion-col class="daily-discover-col">
@@ -171,6 +171,11 @@
           </ion-row>
         </ion-grid>
       </div>
+
+      <ion-infinite-scroll @ionInfinite="loadMoreProducts($event)" id="infinite-scroll">
+        <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ion-content>
   </ion-page>
 </template>
@@ -194,7 +199,7 @@
     components: {},
     setup() {
       onMounted(() => {
-        loadProduct()
+        loadProduct(0)
       })
       const router = useRouter()
 
@@ -222,7 +227,7 @@
       }
 
       function doRefresh(event) {
-        loadProduct()
+        loadProduct(0, true)
           .finally(() => {
             setTimeout(() => {
               if (event)
@@ -239,10 +244,11 @@
         }
       }
 
-      async function loadProduct() {
+      async function loadProduct(more, r) {
         const params = {
           offset: 0,
-          limit: 10,
+          limit: 10 + more,
+          random: r
         }
         await ProductAPI.list(params).then((response) => {
           product.value = response.data
@@ -255,6 +261,13 @@
           searchedProduct.value = response.data
         })
       }
+      async function loadMoreProducts(ev) {
+        setTimeout(() => {
+          loadProduct(10).then(() => {
+            ev.target.complete()
+          })
+        }, 500)
+      }
       return {
         slideOptsTopProd,
         slideOptsFeatProd,
@@ -264,7 +277,8 @@
         getThumbnail,
         thumbnailPath,
         searchProducts,
-        searchedProduct
+        searchedProduct,
+        loadMoreProducts
       }
     }
   }

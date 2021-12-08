@@ -40,6 +40,8 @@
                 </ion-label>
                 <ion-toogle mode="ios" color="success" v-model="anonymousValue" :checked="anonymousValue" />
             </ion-item>
+
+            <ion-loading :is-open="isLoading" message="Saving Review..."></ion-loading>
         </ion-content>
     </ion-page>
 </template>
@@ -75,6 +77,7 @@
             let anonymousValue = ref(false)
             let starRating = ref(5)
 
+            let isLoading = computed(() => store.state.loading.status);
             const userData = computed(() => store.state.user.userData)
 
             let username = computed(() => {
@@ -112,6 +115,7 @@
             }
 
             function onClickSubmit() {
+                store.dispatch('loading/start')
                 anonymousValue.value === false ? product_ratings.value.anonymous = 0 : product_ratings.value.anonymous =
                     1
                 product_ratings.value.user_id = userData.value.id
@@ -120,8 +124,19 @@
                 product_ratings.value.rating = starRating.value
 
                 ProductRatingAPI.add(product_ratings.value).then((response) => {
-                    console.log(response);
-                })
+                        setTimeout(() => {
+                            store.dispatch('toast/presentToast', {
+                                m: response.data.message,
+                                type: ''
+                            })
+                        }, 2000)
+                        store.dispatch('user/loadUserData', userData.value.id).then(() => {
+                            router.push(`/tabs/me`)
+                        })
+                    })
+                    .finally(() => {
+                        store.dispatch('loading/finish')
+                    })
             }
 
             return {
@@ -133,7 +148,8 @@
                 username,
                 onClickSubmit,
                 product_ratings,
-                setRating
+                setRating,
+                isLoading
             }
         }
     }

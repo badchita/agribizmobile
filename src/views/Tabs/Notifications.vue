@@ -88,6 +88,7 @@
       }
 
       function onClickItem(item) {
+        console.log(item);
         let params = {
           id: item.id,
           markRead: 1,
@@ -101,6 +102,8 @@
                 router.push(`/my-purchases/torecieve`)
               if (item.orders.order_status === '3')
                 router.push(`/my-purchases/delivered`)
+              if (item.orders.order_status === '-1')
+                router.push(`/my-purchases/cancelled`)
             })
           } else {
             if (item.orders.order_status === '1')
@@ -109,6 +112,8 @@
               router.push(`/my-purchases/torecieve`)
             if (item.orders.order_status === '3')
               router.push(`/my-purchases/delivered`)
+            if (item.orders.order_status === '-1')
+              router.push(`/my-purchases/cancelled`)
           }
         }
       }
